@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">FE_sy</string>
+
+    <!--포스트 태그 선택 액티비티-->
+    <string name="questionForTag">어떤 스타일의\n여행을 할 계획인가요?</string>
+    <string name="tagDescription">여행과 어울리는 태그를 모두 선택</string>
+    <string name="selectTagButton">포스트 작성</string>
+    <!--포스트 태그-->
+    <string name="toggleButtonActivity">체험 · 액티비티</string>
+    <string name="toggleButtonArt">예술</string>
+    <string name="toggleButtonSnsHotPlace">SNS 핫플</string>
+    <string name="toggleButtonCulture">문화</string>
+    <string name="toggleButtonFamily">가족과 함께</string>
+    <string name="toggleButtonFriend">친구와 함께</string>
+    <string name="toggleButtonLover">연인과 함께</string>
+    <string name="toggleButtonFamousPlace">유명 관광지</string>
+    <string name="toggleButtonNature">자연</string>
+    <string name="toggleButtonRestaurant">맛집 탐방</string>
+
+
+    <!--[C/U]포스트 작성 액티비티-->
+    <string name="uploadPostButton">게시</string>
+    <string name="travelPlace">파주 여행</string>
+    <string name="dayText">day 1: 2023.12.30</string>
+    <string name="placeEachFromCourse">김악산 출렁다리\n퍼스트가든\n파주아울렛</string>
+    <string name="addImageButton">추가</string>
+    <string name="writeContextHint">여기에 여행 기록을 작성해요!</string>
+    <!--[U]포스트 수정 시에만 삭제 버튼 활성화-->
+    <string name="deletePostButton">삭제</string>
+
+    <!--[R]포스트 조회 액티비티-->
+    <string name="mappingButton">지도</string>
+    <string name="sharePostButton">공유</string>
+    <!--자신의 포스트에서만 편집/삭제 버튼 활성화-->
+    <string name="editPostButton">편집</string>
+
+
+    <!--[R]내 포스트 리스트 조회 액티비티-->
+    <string name="readMyPostList">내 포스트 조회</string>
+    <string name="postTitle">string/postTitle</string>
+    <string name="backPageButton">뒤로</string>
+    <string name="addPictureHint">사진\n추가</string>
+
+</resources>

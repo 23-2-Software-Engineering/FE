@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostSearchActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- 검색 레이아웃 -->
+
+        <!-- 포스트 사진 레이어 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:weightSum="3">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/navigation_action" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietSearch"
+                android:layout_width="284dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/til_background"
+                android:hint="Search"
+                android:paddingLeft="32dp"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/search_request_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="8dp"
+                android:background="@color/white"
+                android:src="@drawable/search_icon" />
+        </LinearLayout>
+
+        <!-- 태그들 -->
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginVertical="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/tag_btn_shape"
+                    android:text="#성수동"
+                    android:textColor="@color/cornflowerblue"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/tag_btn_shape"
+                    android:text="#맛집"
+                    android:textColor="@color/cornflowerblue"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/tag_btn_shape"
+                    android:text="#카페"
+                    android:textColor="@color/cornflowerblue"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="602dp">
+
+            <GridView
+                android:id="@+id/postGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="2" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

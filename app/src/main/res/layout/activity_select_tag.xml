@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".SelectTag">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/backPageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/backPageButton"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/questionForTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/questionForTag"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tagDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/questionForTag"
+            android:layout_margin="20dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/tagDescription"
+            android:textSize="15sp" />
+
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:layout_below="@id/tagDescription"
+            android:layout_margin="10dp"
+            android:columnCount="3"
+            android:rowCount="5">
+
+            <ToggleButton
+                android:id="@+id/toggleButtonActivity"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonActivity"
+                android:textOff="@string/toggleButtonActivity"
+                android:textOn="@string/toggleButtonActivity"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonCulture"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonCulture"
+                android:textOff="@string/toggleButtonCulture"
+                android:textOn="@string/toggleButtonCulture"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonArt"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonArt"
+                android:textOff="@string/toggleButtonArt"
+                android:textOn="@string/toggleButtonArt"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonSnsHotPlace"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonSnsHotPlace"
+                android:textOff="@string/toggleButtonSnsHotPlace"
+                android:textOn="@string/toggleButtonSnsHotPlace"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonNature"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonNature"
+                android:textOff="@string/toggleButtonNature"
+                android:textOn="@string/toggleButtonNature"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonFamousPlace"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonFamousPlace"
+                android:textOff="@string/toggleButtonFamousPlace"
+                android:textOn="@string/toggleButtonFamousPlace"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonRestaurant"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonRestaurant"
+                android:textOff="@string/toggleButtonRestaurant"
+                android:textOn="@string/toggleButtonRestaurant"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonFamily"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonFamily"
+                android:textOff="@string/toggleButtonFamily"
+                android:textOn="@string/toggleButtonFamily"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonFriend"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonFriend"
+                android:textOff="@string/toggleButtonFriend"
+                android:textOn="@string/toggleButtonFriend"
+                android:textSize="14sp" />
+
+            <ToggleButton
+                android:id="@+id/toggleButtonLover"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_row="3"
+                android:layout_column="2"
+                android:layout_columnWeight="1"
+                android:background="@drawable/toggle_button_background"
+                android:text="@string/toggleButtonLover"
+                android:textOff="@string/toggleButtonLover"
+                android:textOn="@string/toggleButtonLover"
+                android:textSize="14sp" />
+
+
+        </GridLayout>
+
+        <Button
+            android:id="@+id/nextPageButton"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gridLayout"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="@color/dodgerBlue"
+            android:text="@string/selectTagButton" />
+
+    </LinearLayout>
+
+</RelativeLayout>
