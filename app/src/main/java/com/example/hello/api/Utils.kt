@@ -8,6 +8,7 @@ class Utils: Application() {
     private lateinit var loginId: String
     private lateinit var authToken: String
     private lateinit var loc: String
+    private var userId: Int? = null
     private var postDTO: PostDTO? = null
     private var courseDTO: CourseDto? = null
 
@@ -53,6 +54,13 @@ class Utils: Application() {
     }
     fun getLoc(): String {
         return loc
+    }
+
+    fun setUserId(id: Int){
+        this.userId = id
+    }
+    fun getUserId(): Int? {
+        return userId
     }
 
     fun setPostDTO(post: PostDTO){

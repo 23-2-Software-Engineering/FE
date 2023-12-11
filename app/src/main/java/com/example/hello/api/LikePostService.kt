@@ -1,16 +1,19 @@
 package com.example.hello.api
 
+import com.example.hello.model.LikeResponseDTO
 import com.example.hello.model.PostDTO
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface LikePostService {
-    //백엔드
     @GET("likes/{postId}")
     fun addLike(
         @Header("Authorization") authorization: String,
         @Path("postId") postId: Int
-    ): Call<Boolean>
+    ): Call<LikeResponseDTO>
 
     @GET("likes/count")
     fun countLikesByPost(

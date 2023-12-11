@@ -89,15 +89,15 @@
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
-                    <ToggleButton
+                    <ImageView
                         android:id="@+id/likesButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginEnd="20dp"
-                        android:background="@android:color/transparent"
-                        android:button="@drawable/likes_off_button_image"
                         android:layout_weight="0"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/likes_off_button_image"
                         android:textOff=""
                         android:textOn="" />
 

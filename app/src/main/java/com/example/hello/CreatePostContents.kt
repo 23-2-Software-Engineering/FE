@@ -22,6 +22,7 @@ import com.example.hello.adapter.PostCreateAdapter
 import com.example.hello.api.*
 import com.example.hello.databinding.ActivityPostContentsBinding
 import com.example.hello.model.CourseDto
+import com.example.hello.model.LikeResponseDTO
 import com.example.hello.model.PostDTO
 import com.example.hello.model.PostDataDTO
 import kotlinx.android.synthetic.main.activity_post_contents.authorNicknameView
@@ -226,6 +227,14 @@ class CreatePostContents : AppCompatActivity() {
             binding.updatePostButton.visibility = View.VISIBLE
             binding.deletePostButton.visibility = View.VISIBLE
         }
+
+        try {
+            if(postDTO.likes.contains(utils.getUserId())){
+                binding.likesButton.setImageResource(R.drawable.likes_on_button_image)
+            }
+        } catch (e: Exception){
+            binding.likesButton.setImageResource(R.drawable.likes_off_button_image)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -349,14 +358,19 @@ class CreatePostContents : AppCompatActivity() {
     fun likePost() {
         val postId = postDTO.postId!!
         likePostService.addLike("Bearer $authToken", postId).enqueue(object
-            : Callback<Boolean> {
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+            : Callback<LikeResponseDTO> {
+            override fun onFailure(call: Call<LikeResponseDTO>, t: Throwable) {
                 Log.d("태그", t.message!!)
             }
 
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+            override fun onResponse(call: Call<LikeResponseDTO>, response: Response<LikeResponseDTO>) {
                 if (response.errorBody() == null) {
-                    Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
+                    if(response.body()!!.isLiked){
+                        binding.likesButton.setImageResource(R.drawable.likes_on_button_image)
+                    } else{
+                        binding.likesButton.setImageResource(R.drawable.likes_off_button_image)
+                    }
+                    utils.setUserId(response.body()!!.userId)
                 } else {
                     Log.d("태그: 에러바디", "response : ${response.errorBody()}")
                     Log.d("태그: 메시지", "response : ${response.message()}")
