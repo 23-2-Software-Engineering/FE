@@ -14,6 +14,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.io.IOException
+import java.lang.Thread.sleep
 
 class SignUpActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
@@ -24,16 +26,16 @@ class SignUpActivity : AppCompatActivity() {
 
         // 회원가입 버튼 눌렀을 때
         binding.signUpRequestBtn.setOnClickListener {
-            if(!validateLoginId()) {
+            if (!validateLoginId()) {
                 return@setOnClickListener
             }
-            if(!validatePwd()){
+            if (!validatePwd()) {
                 return@setOnClickListener
             }
-            if(!validateDuplicatedPwd()) {
+            if (!validateDuplicatedPwd()) {
                 return@setOnClickListener
             }
-            if(!validateNickname()){
+            if (!validateNickname()) {
                 return@setOnClickListener
             }
             if (!validateEmail()) {
@@ -41,6 +43,8 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             requestSingUp()
+            Toast.makeText(this, "회원가입 성공!!", Toast.LENGTH_LONG).show()
+            finish()
         }
 
         // 회원가입 취소 버튼
@@ -61,24 +65,22 @@ class SignUpActivity : AppCompatActivity() {
             // 입력한 아이디가 이미 존재하는지 검사
             val retrofit: Retrofit = RetrofitClient.getInstance()
             val signUpService = retrofit.create(SignUpService::class.java)
-            var isDuplicated: Boolean = true
+            var isDuplicated: Boolean = false
 
-            signUpService.isIdDuplicated(loginId).enqueue(object : Callback<Boolean> {
-                    override fun onFailure(call: Call<Boolean>, t: Throwable)
-                    {
-                        Log.e("FAILURE", t.message.toString())
-                        var dialog = AlertDialog.Builder(this@SignUpActivity)
-                        dialog.setTitle("에러")
-                        dialog.setMessage("서버 호출에 실패했습니다.")
-                        dialog.show()
-                        // signUpBinding.tilId.error = "서버 연결에 실패했습니다"
-                    }
+            val callSync: Call<Boolean> = signUpService.isIdDuplicated(loginId)
+            Thread(Runnable() {
+                try {
+                    isDuplicated = callSync.execute().body() == true
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }).start();
 
-                    override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                        isDuplicated = response.body()!!
-                        Log.v("VALIDATE CHECK", "Duplicated : " + response.body())
-                    }
-                })
+            try {
+                sleep(100);
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
 
             return if (isDuplicated) {
                 binding.tilId.error = "해당 아이디가 이미 존재합니다"
@@ -101,24 +103,23 @@ class SignUpActivity : AppCompatActivity() {
             // 입력한 닉네임이 이미 존재하는지 검사
             val retrofit: Retrofit = RetrofitClient.getInstance()
             val signUpService = retrofit.create(SignUpService::class.java)
-            var isDuplicated: Boolean = true
+            var isDuplicated: Boolean = false
 
-            signUpService.isNicknameDuplicated(nickname).enqueue(object : Callback<Boolean> {
-                    override fun onFailure(call: Call<Boolean>, t: Throwable)
-                    {
-                        Log.e("FAILURE", t.message.toString())
-                        val dialog = AlertDialog.Builder(this@SignUpActivity)
-                        dialog.setTitle("에러")
-                        dialog.setMessage("서버 호출에 실패했습니다.")
-                        dialog.show()
-                        // signUpBinding.tilId.error = "서버 연결에 실패했습니다"
-                    }
+            val callSync: Call<Boolean> = signUpService.isNicknameDuplicated(nickname)
+            Thread(Runnable() {
+                try {
+                    isDuplicated = callSync.execute().body() == true
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }).start();
 
-                    override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                        isDuplicated = response.body() == true
-                        Log.v("VALIDATE CHECK", "Duplicated : " + response.body())
-                    }
-                })
+            try {
+                sleep(100);
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+
             return if (isDuplicated) {
                 binding.tilNickname.error = "해당 닉네임이 이미 존재합니다"
                 false
@@ -150,7 +151,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validatePwd(): Boolean {
         val pwd: String = binding.tilPassword.editText?.text.toString()
-         return true
+        return true
     }
 
     // 비밀번호 재입력란 유효성 검사
@@ -158,7 +159,7 @@ class SignUpActivity : AppCompatActivity() {
         val pwd: String = binding.tilPassword.editText?.text.toString()
         val pwdChk: String = binding.tilPasswordCheck.editText?.text.toString()
 
-        return if (pwd == pwdChk) {
+        return if (pwd != pwdChk) {
             binding.tilPasswordCheck.error = "비밀번호가 일치하지 않습니다"
             false
         } else {
@@ -184,8 +185,7 @@ class SignUpActivity : AppCompatActivity() {
 
         signUpService.requestSignUp(signUpDTO)
             .enqueue(object : Callback<SignUpResponseDTO> {
-                override fun onFailure(call: Call<SignUpResponseDTO>, t: Throwable)
-                {
+                override fun onFailure(call: Call<SignUpResponseDTO>, t: Throwable) {
                     Log.e("FAILURE", t.message.toString())
                     var dialog = AlertDialog.Builder(this@SignUpActivity)
                     dialog.setTitle("에러")
@@ -196,12 +196,10 @@ class SignUpActivity : AppCompatActivity() {
 
                 override fun onResponse(
                     call: Call<SignUpResponseDTO>,
-                    response: Response<SignUpResponseDTO>
+                    response: Response<SignUpResponseDTO>,
                 ) {
                     var signUpResponse = response.body()
                     Log.v("SIGNUP", "MSG: " + signUpResponse?.msg)
-
-                    finish()
                 }
             })
     }

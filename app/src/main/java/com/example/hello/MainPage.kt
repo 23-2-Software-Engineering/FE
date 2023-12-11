@@ -53,7 +53,8 @@ class MainPage : AppCompatActivity() {
             val bundle = Bundle()
 
             bundle.putString("authToken", authToken)
-            bundle.putString("loginId", authToken)
+            bundle.putString("loginId", loginId)
+            Log.d("아이디", loginId)
             intent.putExtras(bundle)
 
             startActivity(intent)

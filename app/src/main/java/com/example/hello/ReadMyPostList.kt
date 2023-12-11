@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import kotlin.collections.ArrayList
+import kotlin.math.log
 
 class ReadMyPostList : AppCompatActivity() {
     private val binding by lazy { ActivityReadMyPostListBinding.inflate(layoutInflater) }
@@ -99,17 +100,16 @@ class ReadMyPostList : AppCompatActivity() {
 
 
 //                    var date = response.body()!!.courseData.courseContent[0][0].date!!.split("-")
-//
 //                    var startDate = Calendar.getInstance().apply { set(date[0].toInt(), date[1].toInt(), date[2].toInt()) }
 
 
                     bundle.putString("authToken", authToken)
                     bundle.putString("loginId", loginId)
-                    bundle.putSerializable("postDTO", response.body())
+                    bundle.putSerializable("postDTO", response.body()!!)
+
 //                    bundle.putString("loc", response.body()!!.courseData.courseTitle)
 //                    bundle.putSerializable("startDate", startDate)
                     intent.putExtras(bundle)
-
                     startActivity(intent)
                 } else{
                     Log.d("태그: 에러바디", "response : ${response.errorBody()}")

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +30,7 @@
             <View
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
 
             <Button
                 android:id="@+id/deletePostButton"
@@ -68,52 +69,57 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_weight="1"
+                        android:text="@string/travelPlace"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/likesButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="0"
+                        android:textOff=""
+                        android:textOn=""
+                        android:button="@drawable/likes_off_button_image" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/title"
-                    android:layout_width="0dp"
+                    android:id="@+id/tags"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:text="@string/travelPlace"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="12sp" />
 
-                <ToggleButton
-                    android:id="@+id/likes"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="30dp" />
+
+                <!--postData 정보를 가져옴. layout_height은 가져오는 정보만큼 설정됨.-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/postData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/activity_post_contents_item"/>
+
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tags"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:textSize="12sp" />
-
-
-            <!--postData 정보를 가져옴. layout_height은 가져오는 정보만큼 설정됨.-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/postData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:listitem="@layout/activity_post_contents_item"/>
-
-        </LinearLayout>
 
         </ScrollView>
 

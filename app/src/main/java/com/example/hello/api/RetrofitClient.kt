@@ -1,11 +1,11 @@
 package com.example.hello.api
 
-import android.app.Application
-import android.content.Context
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -18,20 +18,20 @@ object RetrofitClient {
         if(instance == null){
 
             // 로깅인터셉터 세팅
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-
-            // OKHttpClient에 로깅인터셉터 등록
-            val client = OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-//                .addInterceptor(UserAuth())
-                .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
-                .build()
+//            val interceptor = HttpLoggingInterceptor()
+//            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+//
+//            // OKHttpClient에 로깅인터셉터 등록
+//            val client = OkHttpClient.Builder()
+//                .addInterceptor(interceptor)
+//                .connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
+//                .build()
 
             instance = Retrofit.Builder()
                 .baseUrl("http://192.168.0.77:8080")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client) // Retrofit 객체에 OkHtt   pClient 적용
+//                .client(client) // Retrofit 객체에 OkHttpClient 적용
                 .build()
         }
         return instance!!

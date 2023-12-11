@@ -1,127 +1,123 @@
-package com.example.se_proj
+package com.example.hello
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.hello.R
 import com.example.hello.adapter.PostSearchAdapter
+import com.example.hello.api.PostSearchService
+import com.example.hello.api.RetrofitClient
 import com.example.hello.databinding.ActivityPostSearchBinding
-import com.example.se_proj.data.model.PostDTO
-import com.example.se_proj.data.model.PostSeacrhDTO
-import com.example.se_proj.databinding.ActivityPostSearchBinding
-import com.example.se_proj.service.CourseSearchService
+import com.example.hello.model.CourseInfo
+import com.example.hello.model.PostDTO
+import com.example.hello.model.PostDataDTO
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.activity_post_search.tietSearch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.io.IOException
+import java.lang.NullPointerException
 
 class PostSearchActivity : AppCompatActivity() {
 
     private val postSearchBinding by lazy { ActivityPostSearchBinding.inflate(layoutInflater) }
-    private lateinit var postSeacrhDTO: PostSeacrhDTO
+    private lateinit var gridView: GridView
+    private lateinit var adapter: PostSearchAdapter
+    private var postList = ArrayList<PostDTO>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // 모든 게시글 검색
-        searchAllPost()
 
         super.onCreate(savedInstanceState)
         setContentView(postSearchBinding.root)
 
-        val gridView: GridView = findViewById(R.id.postGridView) as GridView
+        gridView = findViewById(R.id.postGridView)
 
-        // 어댑터 생성 및 설정
-        val gridAdapter = PostSearchAdapter(this, postSeacrhDTO.postList)
-        gridView.setAdapter(gridAdapter)
+//        val dummyPostList = ArrayList<PostSearchTestDTO>()
+//        for(i: Int in 1..8) {
+//            dummyPostList.add(PostSearchTestDTO("Post Title${i}"))
+//        }
+//        gridView.adapter = PostSearchTestAdapter(this, dummyPostList)
 
-        // 뒤로가기 버튼 클릭 리스너
+        // 모든 게시글 검색
+        try {
+            searchAllPost()
+        } catch (e :NullPointerException) {
+            Log.e("SEARCH POST", "ERR: 포스트 찾기에서 NULL POINTER EXCEPTION 발생")
+        }
+        gridView.adapter = PostSearchAdapter(this, postList)
+
+        // 포스트 이미지 클릭
+        gridView.setOnItemClickListener{parent, view, position, id ->
+
+        }
+
+        // 뒤로 가기 버튼 클릭
         postSearchBinding.backBtn.setOnClickListener {
             finish()
         }
 
-        // 포스트 검색 버튼 클릭 리스너
+        // 검색 버튼 클릭
         postSearchBinding.searchRequestBtn.setOnClickListener {
-            searchPostByTag()
-            gridView.adapter = PostSearchAdapter(this, postSeacrhDTO.postList)
+            val tietSearch: TextInputEditText = findViewById(R.id.tietSearch)
+            searchPostByTag(tietSearch.text.toString())
+            gridView.adapter = PostSearchAdapter(this, postList)
         }
 
-        // 그리드뷰에 클릭 리스너 설정 (포스트 이미지 클릭시 해당 포스트뷰로 이동)
-        gridView.setOnItemClickListener { parent, view, position, id ->
-
-            // 클릭된 그리드 항목의 데이터를 가져오기
-            val clickedPost = postSeacrhDTO.postList[position]
-
-            Toast.makeText(this,"그림 클릭!!", Toast.LENGTH_LONG).show()
-            // 클릭된 항목의 postId를 가져와서 다음 액티비티에 전달
-//            val intent = Intent(this, ReadPost::class.java)
-//            intent.putExtra("EXTRA_MESSAGE", clickedPost.postId)
-//            startActivity(intent)
-
-            // 혹은 PostDTO를 직접 전달하는 경우
-            // intent.putExtra("POST_DATA", clickedPost)
-            // startActivity(intent)
-
-        }
 
     }
 
     // 포스트 전체 검색
-    private fun searchAllPost(): PostSeacrhDTO {
+    private fun searchAllPost() {
         var retrofit: Retrofit = RetrofitClient.getInstance()
-        var courseSearchService = retrofit.create(CourseSearchService::class.java)
+        var courseSearchService = retrofit.create(PostSearchService::class.java)
 
-        courseSearchService!!.searchAllPost()
-            .enqueue(object : Callback<ArrayList<PostDTO>> {
-                override fun onFailure(call: Call<ArrayList<PostDTO>>, t: Throwable) {
-                    Log.e("FAILURE", t.message.toString())
-                    var dialog = AlertDialog.Builder(this@PostSearchActivity)
-                    dialog.setTitle("에러")
-                    dialog.setMessage("서버 호출에 실패했습니다.")
-                    dialog.show()
-                    // signUpBinding.tilId.error = "서버 연결에 실패했습니다"
-                }
+        val callSync: Call<ArrayList<PostDTO>> = courseSearchService.searchPostAll()
+        Thread(Runnable() {
+            try {
+                postList = callSync.execute().body()!!
+            } catch (e: IOException) {
+                Log.e("SEACRCH POST ALL", "ERR: " + callSync.execute().errorBody())
+                e.printStackTrace()
+            }
+        }).start();
 
-                override fun onResponse(
-                    call: Call<ArrayList<PostDTO>>,
-                    response: Response<ArrayList<PostDTO>>
-                ) {
-                    postSeacrhDTO.postList = response.body()!!
-                    Log.v("POST SEARCH", "MSG: " + response!!.body()!!.size)
-                    Log.v("POST SEARCH", "ERRMSG : " + response.errorBody())
-                }
+        try {
+            Thread.sleep(1000);
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
 
-            })
-        return postSeacrhDTO
+        Log.d("SEARCH POST ALL", "MSG: " + postList.toString())
     }
 
     // 태그로 게시글 검색
-    private fun searchPostByTag(): PostSeacrhDTO {
+    private fun searchPostByTag(tag: String) {
         val searchTag: String = postSearchBinding.tietSearch.text.toString()
         var retrofit: Retrofit = RetrofitClient.getInstance()
-        var courseSearchService = retrofit.create(CourseSearchService::class.java)
+        var courseSearchService = retrofit.create(PostSearchService::class.java)
 
-        courseSearchService!!.searchPostByTag(searchTag)
-            .enqueue(object : Callback<PostSeacrhDTO> {
-                override fun onFailure(call: Call<PostSeacrhDTO>, t: Throwable) {
-                    Log.e("FAILURE", t.message.toString())
-                    var dialog = AlertDialog.Builder(this@PostSearchActivity)
-                    dialog.setTitle("에러")
-                    dialog.setMessage("서버 호출에 실패했습니다.")
-                    dialog.show()
-                    // signUpBinding.tilId.error = "서버 연결에 실패했습니다"
-                }
+        val callSync: Call<ArrayList<PostDTO>> = courseSearchService.searchPostByTag(tag)
+        Thread(Runnable() {
+            try {
+                postList = callSync.execute().body()!!
+            } catch (e: IOException) {
+                Log.e("SEACRCH POST TAG", "ERR: " + callSync.execute().errorBody())
+                e.printStackTrace()
+            }
+        }).start();
 
-                override fun onResponse(
-                    call: Call<PostSeacrhDTO>,
-                    response: Response<PostSeacrhDTO>
-                ) {
-                    postSeacrhDTO = response.body()!!
-                    Log.v("POST SEARCH BY TAG", "ERRMSG : " + response.errorBody())
-                }
-            })
-        return postSeacrhDTO
+        try {
+            Thread.sleep(1000);
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        Log.d("SEARCH POST TAG", "MSG: " + postList.toString())
     }
-
-    // 아이디로 게시글 검색 -> 이 페이지에서는 안넣어도 될듯?
 }

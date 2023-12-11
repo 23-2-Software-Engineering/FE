@@ -20,8 +20,8 @@ data class PostDTO(
 
 data class PostDataDTO(
     var courseTitle: String,
-    var places: List<CourseInfo>,
-    var pictures: List<String>,
+    var places: ArrayList<CourseInfo>,
+    var pictures: ArrayList<String>,
     var content: String
 ): Serializable
 
