@@ -24,6 +24,7 @@ import com.example.hello.databinding.ActivityPostContentsBinding
 import com.example.hello.model.CourseDto
 import com.example.hello.model.PostDTO
 import com.example.hello.model.PostDataDTO
+import com.example.hello.model.LikeResponseDTO
 import kotlinx.android.synthetic.main.activity_post_contents.authorNicknameView
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -345,16 +346,15 @@ class CreatePostContents : AppCompatActivity() {
         }
     }
 
-    //백엔드 LikeService.java 에서 addLike : Boolean 처리되어 있음
     fun likePost() {
         val postId = postDTO.postId!!
         likePostService.addLike("Bearer $authToken", postId).enqueue(object
-            : Callback<Boolean> {
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+            : Callback<LikeResponseDTO> {
+            override fun onFailure(call: Call<LikeResponseDTO>, t: Throwable) {
                 Log.d("태그", t.message!!)
             }
 
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+            override fun onResponse(call: Call<LikeResponseDTO>, response: Response<LikeResponseDTO>) {
                 if (response.errorBody() == null) {
                     Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
                 } else {

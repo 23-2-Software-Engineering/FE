@@ -1,6 +1,5 @@
 package com.example.hello.api
 
-import com.example.hello.model.CourseDto
 import com.example.hello.model.PostDTO
 import retrofit2.Call
 import retrofit2.http.*
