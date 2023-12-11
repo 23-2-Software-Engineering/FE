@@ -35,6 +35,7 @@ class PostSearchActivity : AppCompatActivity() {
 
             // 게시글 추천 리퀘스트
             recommendPost()
+            Thread.sleep(100)
         } catch (e: NullPointerException) {
             Log.e("RECOMMEND POST", "ERR: 포스트 추천에서 NULL POINTER EXCEPTION 발생")
         }
@@ -61,13 +62,13 @@ class PostSearchActivity : AppCompatActivity() {
             val loginId = intent.getStringExtra("loginId")
             val authToken = intent.getStringExtra("authToken")
             val postDTO = parent.getItemAtPosition(position) as PostDTO
-            Log.d("Intent: ", loginId + " " + authToken)
+            Log.d("Intent: ", authToken + " " + loginId)
 
-            val intent = Intent(this, CreatePostContents::class.java)
-            intent.putExtra("authToken", authToken)
-            intent.putExtra("loginId", loginId)
-            intent.putExtra("postDTO", postDTO)
-            startActivity(intent)
+            val newIntent = Intent(this, CreatePostContents::class.java)
+            newIntent.putExtra("authToken", authToken)
+            newIntent.putExtra("loginId", loginId)
+            newIntent.putExtra("postDTO", postDTO)
+            startActivity(newIntent)
         }
     }
 
@@ -87,7 +88,6 @@ class PostSearchActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }).start()
-
 
         try {
             Thread.sleep(100);
@@ -116,13 +116,11 @@ class PostSearchActivity : AppCompatActivity() {
             }
         }).start();
 
-
         try {
             Thread.sleep(100);
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-
 
         Log.d("RECOMMEND POST", "MSG: " + postList.toString())
     }
@@ -138,7 +136,6 @@ class PostSearchActivity : AppCompatActivity() {
         Thread(Runnable() {
             try {
                 newPostList = callSync.execute().body()!!
-                val noData = callSync.execute().body()!!.isEmpty()
                 postList = newPostList
             } catch (e: IOException) {
                 Log.e("SEACRCH POST TAG", "ERR: " + callSync.execute().errorBody())
@@ -146,13 +143,10 @@ class PostSearchActivity : AppCompatActivity() {
             }
         }).start();
 
-        var sleepTime: Int = 0
-        while (newPostList.isEmpty()) {
-            try {
-                Thread.sleep(10);
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+        try {
+            Thread.sleep(100);
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
 
         Log.d("SEARCH POST TAG", "MSG: " + postList.toString())

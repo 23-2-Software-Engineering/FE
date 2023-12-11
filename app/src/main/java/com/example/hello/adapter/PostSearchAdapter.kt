@@ -62,11 +62,6 @@ class PostSearchAdapter(private var context: Context?, private var postList: Arr
             postThumbnailView.setImageResource(R.drawable.dummy_img)
         }
 
-        view.setOnClickListener(View.OnClickListener() {
-            val postId = postList.get(position).postId // 게시글 아이디
-            Log.d("POST SEARCH", "MSG: ${postId}번 게시글 클릭!")
-        })
-
         return view!!
     }
 
