@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -23,6 +22,8 @@ class MainPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         utils = application as Utils
+        utils.terminatePostDTO()
+        utils.terminateCourseDTO()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

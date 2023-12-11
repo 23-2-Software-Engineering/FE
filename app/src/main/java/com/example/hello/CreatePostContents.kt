@@ -24,6 +24,7 @@ import com.example.hello.databinding.ActivityPostContentsBinding
 import com.example.hello.model.CourseDto
 import com.example.hello.model.PostDTO
 import com.example.hello.model.PostDataDTO
+import kotlinx.android.synthetic.main.activity_post_contents.authorNicknameView
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -212,6 +213,7 @@ class CreatePostContents : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun readPost(){
         tags = postDTO.tags
+        binding.authorNicknameView.text = postDTO.authorNickname
         binding.title.text = postDTO.title
         binding.tags.text = "#${tags.joinToString(", #")}"
 

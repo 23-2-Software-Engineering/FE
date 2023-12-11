@@ -95,12 +95,22 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginEnd="20dp"
+                        android:background="@android:color/transparent"
+                        android:button="@drawable/likes_off_button_image"
                         android:layout_weight="0"
                         android:textOff=""
-                        android:textOn=""
-                        android:button="@drawable/likes_off_button_image" />
+                        android:textOn="" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/authorNicknameView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tags"

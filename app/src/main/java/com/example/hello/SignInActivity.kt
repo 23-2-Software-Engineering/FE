@@ -72,7 +72,14 @@ class SignInActivity : AppCompatActivity() {
                     utils.setAuthToken(response.body()!!.accessToken)
                     utils.setLoginId(response.body()!!.accessToken)
 
+                    val authToken = response.body()!!.accessToken
+                    val loginId = response.body()!!.accessToken
+                    while(authToken == null || loginId == null) {   // 서버 통신 응답 대기
+                        Thread.sleep(10)
+                    }
+
                     val intent = Intent(this@SignInActivity, MainPage::class.java)
+
                     startActivity(intent)
                     finish()
                 }
