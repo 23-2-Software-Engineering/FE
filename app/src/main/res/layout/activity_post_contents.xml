@@ -95,11 +95,11 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginEnd="20dp"
+                        android:background="@android:color/transparent"
+                        android:button="@drawable/likes_off_button_image"
                         android:layout_weight="0"
-                        android:background="transparent"
                         android:textOff=""
-                        android:textOn=""
-                        android:button="@drawable/likes_off_button_image" />
+                        android:textOn="" />
 
                 </LinearLayout>
 
