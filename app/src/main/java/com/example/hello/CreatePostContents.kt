@@ -25,6 +25,7 @@ import com.example.hello.model.CourseDto
 import com.example.hello.model.LikeResponseDTO
 import com.example.hello.model.PostDTO
 import com.example.hello.model.PostDataDTO
+import com.example.hello.model.LikeResponseDTO
 import kotlinx.android.synthetic.main.activity_post_contents.authorNicknameView
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -354,7 +355,6 @@ class CreatePostContents : AppCompatActivity() {
         }
     }
 
-    //백엔드 LikeService.java 에서 addLike : Boolean 처리되어 있음
     fun likePost() {
         val postId = postDTO.postId!!
         likePostService.addLike("Bearer $authToken", postId).enqueue(object
