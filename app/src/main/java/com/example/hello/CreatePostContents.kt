@@ -268,7 +268,8 @@ class CreatePostContents : AppCompatActivity() {
     private fun createPost() {
         Log.d("태그", listAdapter.itemCount.toString())
         Log.d("태그", listAdapter.getItemId(0).toString())
-        Log.d("태그", listAdapter.getItemViewType(0).toString())
+        Log.d("태그", binding.postData.layoutManager.toString())
+        listAdapter.test()
 
         postApi.postPost("Bearer $authToken", postDTO).enqueue(object
             : Callback<PostDTO> {
@@ -328,29 +329,16 @@ class CreatePostContents : AppCompatActivity() {
 
     fun deletePost() {
         postDTO.postId?.let {
-//            deleteApi.deletePost("Bearer $authToken", it.toInt()).enqueue(object
-//                : Callback<PostDTO> {
-//                override fun onFailure(call: Call<PostDTO>, t: Throwable) {
-//                    Log.d("태그", t.message!!)
-//                }
-//
-//                override fun onResponse(call: Call<PostDTO>, response: Response<PostDTO>) {
-//                    if (response.errorBody() == null) {
-//                        Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
-//                        // 포스트 삭제 후 ReadMyPostList 액티비티로 이동
-//                        val intent = Intent(this@CreatePostContents, ReadMyPostList::class.java)
-//                        val bundle = Bundle()
-//                        bundle.putString("authToken", authToken)
-//                        intent.putExtras(bundle)
-//                        startActivity(intent)
-//                        finish()
-//                    } else {
-//                        Log.d("태그: 에러바디", "response : ${response.errorBody()}")
-//                        Log.d("태그: 메시지", "response : ${response.message()}")
-//                        Log.d("태그: 코드", "response : ${response.code()}")
-//                    }
-//                }
-//            })
+            deleteApi.deletePost("Bearer $authToken", it.toInt()).enqueue(object
+                : Callback<Void> {
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d("태그", t.message!!)
+                }
+
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    finish()
+                }
+            })
         }
     }
 

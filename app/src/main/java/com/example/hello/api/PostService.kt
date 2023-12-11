@@ -18,7 +18,7 @@ interface PostDeleteService{
     fun deletePost(
         @Header("Authorization") authorizationHeader: String,
         @Path("id") id: Int
-    )
+    ): Call<Void>
 }
 
 interface PostViewService{

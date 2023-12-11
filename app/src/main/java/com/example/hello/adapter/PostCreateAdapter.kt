@@ -20,6 +20,10 @@ class PostCreateAdapter(
 
     override fun getItemCount(): Int = items.postData.size
 
+    fun test(){
+
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items.postData[position], position)
         holder.binding.addPictureButton.setOnClickListener {
