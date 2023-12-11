@@ -82,7 +82,7 @@ class PostCreateAdapter(
             binding.placeName.text = courseList
             binding.imageList.apply {
                 adapter = listAdapter.build(item, myPost)
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             }
         }
     }

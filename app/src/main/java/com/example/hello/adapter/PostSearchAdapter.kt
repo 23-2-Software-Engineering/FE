@@ -50,7 +50,7 @@ class PostSearchAdapter(private var context: Context?, private var postList: Arr
 
         val postThumbnailView: ImageView = view.findViewById(R.id.postview_img)
         try {
-            val UrlStr: String = "http://10.0.2.2:8080" + postList.get(position).postData.first().pictures.first()
+            val UrlStr: String = "http://192.168.0.77:8080" + postList.get(position).postData.first().pictures.first()
             Glide.with(context!!)
                 .load(UrlStr)
                 .into(postThumbnailView)

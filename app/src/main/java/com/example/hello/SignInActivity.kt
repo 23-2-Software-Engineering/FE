@@ -70,7 +70,7 @@ class SignInActivity : AppCompatActivity() {
                     utils.init()
 
                     utils.setAuthToken(response.body()!!.accessToken)
-                    utils.setLoginId(response.body()!!.accessToken)
+                    utils.setLoginId(response.body()!!.loginId)
 
                     val authToken = response.body()!!.accessToken
                     val loginId = response.body()!!.accessToken

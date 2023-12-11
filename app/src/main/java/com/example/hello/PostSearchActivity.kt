@@ -8,6 +8,7 @@ import android.widget.GridView
 import com.example.hello.adapter.PostSearchAdapter
 import com.example.hello.api.PostSearchService
 import com.example.hello.api.RetrofitClient
+import com.example.hello.api.Utils
 import com.example.hello.databinding.ActivityPostSearchBinding
 import com.example.hello.model.PostDTO
 import com.google.android.material.textfield.TextInputEditText
@@ -21,11 +22,13 @@ class PostSearchActivity : AppCompatActivity() {
     private val postSearchBinding by lazy { ActivityPostSearchBinding.inflate(layoutInflater) }
     private lateinit var gridView: GridView
     private var postList = ArrayList<PostDTO>()
+    lateinit var utils: Utils
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(postSearchBinding.root)
+        utils = application as Utils
 
         gridView = findViewById(R.id.postGridView)
 
@@ -59,15 +62,9 @@ class PostSearchActivity : AppCompatActivity() {
         }
 
         gridView.setOnItemClickListener { parent, view, position, id ->
-            val loginId = intent.getStringExtra("loginId")
-            val authToken = intent.getStringExtra("authToken")
-            val postDTO = parent.getItemAtPosition(position) as PostDTO
-            Log.d("Intent: ", authToken + " " + loginId)
+            utils.setPostDTO(parent.getItemAtPosition(position) as PostDTO)
 
             val newIntent = Intent(this, CreatePostContents::class.java)
-            newIntent.putExtra("authToken", authToken)
-            newIntent.putExtra("loginId", loginId)
-            newIntent.putExtra("postDTO", postDTO)
             startActivity(newIntent)
         }
     }

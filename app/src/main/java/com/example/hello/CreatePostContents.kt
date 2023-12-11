@@ -200,7 +200,7 @@ class CreatePostContents : AppCompatActivity() {
             createPost()
         }
         binding.likesButton.setOnClickListener {
-
+            likePost()
         }
 
         binding.postData.apply {
@@ -345,40 +345,8 @@ class CreatePostContents : AppCompatActivity() {
         }
     }
 
-    fun onLikeButtonClick() {
-        val userId = postDTO.userId
-        val isLiked = postDTO.likes.contains(userId)
-
-        if (isLiked) {
-            unlikePost(authToken)
-        } else {
-            likePost(authToken)
-        }
-    }
-
     //백엔드 LikeService.java 에서 addLike : Boolean 처리되어 있음
-    fun likePost(authToken: String) {
-        val postId = postDTO.postId!!
-        likePostService.addLike("Bearer $authToken", postId).enqueue(object
-            : Callback<Boolean> {
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                Log.d("태그", t.message!!)
-            }
-
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                if (response.errorBody() == null) {
-                    Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
-                } else {
-                    Log.d("태그: 에러바디", "response : ${response.errorBody()}")
-                    Log.d("태그: 메시지", "response : ${response.message()}")
-                    Log.d("태그: 코드", "response : ${response.code()}")
-                }
-            }
-        })
-    }
-
-    //좋아요 추가, 제거 모두 백엔드에서는 한곳에서 처리하길래
-    fun unlikePost(authToken: String) {
+    fun likePost() {
         val postId = postDTO.postId!!
         likePostService.addLike("Bearer $authToken", postId).enqueue(object
             : Callback<Boolean> {

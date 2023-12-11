@@ -11,11 +11,21 @@ class Utils: Application() {
     private var postDTO: PostDTO? = null
     private var courseDTO: CourseDto? = null
 
+    companion object {
+        var instance: Utils? = null
+    }
+
     override fun onCreate() {
         super.onCreate()
+        instance = this
         loginId = ""
         authToken = ""
         loc = ""
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        instance = null
     }
 
     fun init(){

@@ -53,6 +53,7 @@ class MainPage : AppCompatActivity() {
         binding.moveToLogout.setOnClickListener{
             val intent = Intent(this, SignInActivity::class.java)
 
+            utils.onTerminate()
             startActivity(intent)
             finish()
         }
