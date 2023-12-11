@@ -1,6 +1,9 @@
 package com.example.hello.adapter
 
 import android.annotation.SuppressLint
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +20,10 @@ class PostCreateAdapter(
     :RecyclerView.Adapter<PostCreateAdapter.ViewHolder>() {
     private lateinit var items: PostDTO
     var myPost: Boolean = false
+    var contents: ArrayList<String> = arrayListOf()
 
     override fun getItemCount(): Int = items.postData.size
-
-    fun test(){
-
-    }
+    fun contentsUpload(): ArrayList<String> = contents
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items.postData[position], position)
@@ -54,12 +55,21 @@ class PostCreateAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: PostDataDTO, position: Int){
             if(myPost){
-                binding.content.isFocusable = true
-                binding.content.isClickable = true
                 binding.addPictureButton.visibility = View.VISIBLE
                 binding.content.visibility = View.VISIBLE
                 binding.content2.visibility = View.GONE
                 binding.content.setText(item.content)
+
+                binding.content.addTextChangedListener(object: TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+                        contents[position] = binding.content.text.toString()
+                    }
+                })
             }
 
             binding.content2.text = item.content
@@ -80,6 +90,9 @@ class PostCreateAdapter(
     fun build(i: PostDTO, isMyPost: Boolean): PostCreateAdapter {
         items = i
         myPost = isMyPost
+        for(index in 0 until i.postData.size){
+            contents.add(i.postData[index].content)
+        }
         return this
     }
 

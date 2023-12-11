@@ -23,6 +23,7 @@ class ReadMyPostList : AppCompatActivity() {
     lateinit var myPosts:ArrayList<PostDTO>
     lateinit var authToken: String
     lateinit var loginId: String
+    lateinit var utils: Utils
 
     val listAdapter = PostViewAdapter(
         onClickView = {
@@ -43,9 +44,10 @@ class ReadMyPostList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        utils = application as Utils
 
-        authToken = intent.getStringExtra("authToken").toString()
-        loginId = intent.getStringExtra("loginId").toString()
+        authToken = utils.getAuthToken()
+        loginId = utils.getLoginId()
 
         apiExecute()
 
@@ -96,20 +98,13 @@ class ReadMyPostList : AppCompatActivity() {
                 if(response.errorBody() == null){
                     Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
                     val intent = Intent(this@ReadMyPostList, CreatePostContents::class.java)
-                    val bundle = Bundle()
-
 
 //                    var date = response.body()!!.courseData.courseContent[0][0].date!!.split("-")
 //                    var startDate = Calendar.getInstance().apply { set(date[0].toInt(), date[1].toInt(), date[2].toInt()) }
 
+                    utils.setPostDTO(response.body()!!)
 
-                    bundle.putString("authToken", authToken)
-                    bundle.putString("loginId", loginId)
-                    bundle.putSerializable("postDTO", response.body()!!)
-
-//                    bundle.putString("loc", response.body()!!.courseData.courseTitle)
 //                    bundle.putSerializable("startDate", startDate)
-                    intent.putExtras(bundle)
                     startActivity(intent)
                 } else{
                     Log.d("태그: 에러바디", "response : ${response.errorBody()}")

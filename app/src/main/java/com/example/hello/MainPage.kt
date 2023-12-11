@@ -12,20 +12,17 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.hello.api.Utils
 import com.example.hello.databinding.ActivityMainBinding
 import java.util.*
 
 class MainPage : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
-    lateinit var authToken:String
-    lateinit var loginId:String
+    lateinit var utils: Utils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        authToken = intent.getStringExtra("authToken").toString()
-        loginId = intent.getStringExtra("loginId").toString()
+        utils = application as Utils
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -35,38 +32,19 @@ class MainPage : AppCompatActivity() {
         }
 
         binding.courseSearch.setOnClickListener{
-            Log.d("태그", authToken)
-
             val intent = Intent(this, CourseView::class.java)
-            val bundle = Bundle()
-
-            bundle.putString("authToken", authToken)
-            bundle.putString("loginId", loginId)
-            intent.putExtras(bundle)
 
             startActivity(intent)
         }
 
         binding.postSearch.setOnClickListener {
             val intent = Intent(this, PostSearchActivity::class.java)
-            val bundle = Bundle()
-
-            bundle.putString("authToken", authToken)
-            bundle.putString("loginId", loginId)
-            intent.putExtras(bundle)
 
             startActivity(intent)
         }
 
         binding.myPosts.setOnClickListener{
-            Log.d("태그", authToken)
-
             val intent = Intent(this, ReadMyPostList::class.java)
-            val bundle = Bundle()
-
-            bundle.putString("authToken", authToken)
-            bundle.putString("loginId", loginId)
-            intent.putExtras(bundle)
 
             startActivity(intent)
         }
@@ -128,8 +106,7 @@ class MainPage : AppCompatActivity() {
                 Toast.makeText(this, "장소를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else{
-                bundle.putString("authToken", authToken)
-                bundle.putString("loc", loc)
+                utils.setLoc(loc)
                 bundle.putSerializable("startDate", startDate)
                 bundle.putSerializable("endDate", endDate)
                 intent.putExtras(bundle)

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hello.adapter.ListAdapter
 import com.example.hello.adapter.ListLayout
 import com.example.hello.api.KakaoAPI
+import com.example.hello.api.Utils
 import com.example.hello.databinding.KakaoMapBinding
 import com.example.hello.model.ResultSearchKeyword
 import kotlinx.android.synthetic.main.balloon_layout.*
@@ -39,6 +40,7 @@ class LocFind : AppCompatActivity() {
         }
     ).build(listItems)
     private val eventListener = MarkerEventListener(this)
+    lateinit var utils: Utils
 
     fun selectLoc(loc: ListLayout) {
         val returnIntent = Intent(this, Course::class.java)
@@ -62,8 +64,9 @@ class LocFind : AppCompatActivity() {
         binding = KakaoMapBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        utils = application as Utils
 
-        keyword += intent.getStringExtra("place")
+        keyword = utils.getLoc()
         val name = intent.getStringExtra("locName")
         if(name != ""){
             keyword += name
@@ -88,7 +91,7 @@ class LocFind : AppCompatActivity() {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.searchField.windowToken, 0)
 
-            keyword = intent.getStringExtra("place") + " " + binding.searchField.text.toString()
+            keyword = utils.getLoc() + " " + binding.searchField.text.toString()
             searchKeyword(keyword, pageNumber)
         }
 

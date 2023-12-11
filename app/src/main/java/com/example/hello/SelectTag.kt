@@ -3,6 +3,7 @@ package com.example.hello
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import com.example.hello.api.Utils
 import com.example.hello.databinding.ActivitySelectTagBinding
 
 class SelectTag : AppCompatActivity() {
@@ -10,13 +11,15 @@ class SelectTag : AppCompatActivity() {
     private lateinit var binding: ActivitySelectTagBinding
     private var tags = arrayListOf<String>()
     var loginId: String = ""
+    lateinit var utils: Utils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectTagBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        utils = application as Utils
 
-        loginId = intent.getStringExtra("loginId").toString()
+        loginId = utils.getLoginId()
 
         binding.backPageButton.setOnClickListener{
             finish()
@@ -66,17 +69,11 @@ class SelectTag : AppCompatActivity() {
     }
 
     private fun moveToCreatePostActivity() {
-        val authToken = intent.getStringExtra("authToken")
-        val courseDto = intent.getSerializableExtra("courseDto")
-
         // 선택된 태그를 CreatePostContents 액티비티로 전달
         val intent = Intent(this, CreatePostContents::class.java)
         val bundle = Bundle()
 
         bundle.putSerializable("tags", tags)
-        bundle.putSerializable("courseDto", courseDto)
-        bundle.putString("authToken", authToken)
-        bundle.putString("loginId", loginId)
         intent.putExtras(bundle)
 
         startActivity(intent)

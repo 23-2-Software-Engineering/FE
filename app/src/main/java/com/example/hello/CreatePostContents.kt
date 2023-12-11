@@ -56,6 +56,7 @@ class CreatePostContents : AppCompatActivity() {
     val likePostService: LikePostService = retrofit.create(LikePostService::class.java)
 
     lateinit var authToken: String
+    lateinit var utils: Utils
 
     var listAdapter = PostCreateAdapter(
         onClickAddImage = {
@@ -138,7 +139,6 @@ class CreatePostContents : AppCompatActivity() {
     }
 
     fun sendImage(body: ArrayList<MultipartBody.Part>){
-        Log.d("호출", imgApi.toString())
         imgApi.uploadImg(body).enqueue(object: Callback<ArrayList<String>>{
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<ArrayList<String>>, response: Response<ArrayList<String>>) {
@@ -175,11 +175,12 @@ class CreatePostContents : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPostContentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        authToken = intent.getStringExtra("authToken")!!
-        loginId = intent.getStringExtra("loginId")!!
+        utils = application as Utils
+        authToken = utils.getAuthToken()
+        loginId = utils.getLoginId()
 
         try {
-            postDTO = intent.getSerializableExtra("postDTO") as PostDTO
+            postDTO = utils.getPostDTO()!!
             readPost()
         } catch (e: NullPointerException){
             newPost()
@@ -198,7 +199,7 @@ class CreatePostContents : AppCompatActivity() {
             createPost()
         }
         binding.likesButton.setOnClickListener {
-            postDTO.postId?.let { it1 -> likePost(authToken) }
+
         }
 
         binding.postData.apply {
@@ -214,7 +215,7 @@ class CreatePostContents : AppCompatActivity() {
         binding.title.text = postDTO.title
         binding.tags.text = "#${tags.joinToString(", #")}"
 
-        val id = intent.getStringExtra("loginId")!!
+        val id = utils.getLoginId()
         Log.d("내 아이디", id)
         Log.d("포스트  아이디", postDTO.loginId!!)
         myPost = postDTO.loginId == id
@@ -227,7 +228,7 @@ class CreatePostContents : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun newPost() {
-        val courseData:CourseDto = intent.getSerializableExtra("courseDto") as CourseDto
+        val courseData:CourseDto = utils.getCourseDTO()!!
 
         tags = intent.getSerializableExtra("tags") as ArrayList<String>
 
@@ -265,11 +266,12 @@ class CreatePostContents : AppCompatActivity() {
         myPost = true
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun createPost() {
-        Log.d("태그", listAdapter.itemCount.toString())
-        Log.d("태그", listAdapter.getItemId(0).toString())
-        Log.d("태그", binding.postData.layoutManager.toString())
-        listAdapter.test()
+        val contents = listAdapter.contentsUpload()
+        for(i in 0 until contents.size){
+            postDTO.postData[i].content = contents[i]
+        }
 
         postApi.postPost("Bearer $authToken", postDTO).enqueue(object
             : Callback<PostDTO> {
@@ -281,12 +283,8 @@ class CreatePostContents : AppCompatActivity() {
                 if (response.errorBody() == null) {
                     Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
                     val intent = Intent(this@CreatePostContents, ReadMyPostList::class.java)
-                    val bundle = Bundle()
 
-                    bundle.putString("authToken", authToken)
-                    bundle.putString("loginId", loginId)
-                    intent.putExtras(bundle)
-
+                    utils.terminateCourseDTO()
                     startActivity(intent)
                     finish()
                 } else {
@@ -304,9 +302,10 @@ class CreatePostContents : AppCompatActivity() {
 
         val id = postDTO.postId!!
 
-        Log.d("태그", listAdapter.itemCount.toString())
-        Log.d("태그", listAdapter.getItemId(0).toString())
-        Log.d("태그", listAdapter.getItemViewType(0).toString())
+        val contents = listAdapter.contentsUpload()
+        for(i in 0 until contents.size){
+            postDTO.postData[i].content = contents[i]
+        }
 
         updateApi.updatePost("Bearer $authToken", id, postDTO).enqueue(object
             : Callback<PostDTO> {
@@ -317,6 +316,7 @@ class CreatePostContents : AppCompatActivity() {
             override fun onResponse(call: Call<PostDTO>, response: Response<PostDTO>) {
                 if (response.errorBody() == null) {
                     Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
+                    utils.terminatePostDTO()
                     finish()
                 } else {
                     Log.d("태그: 에러바디", "response : ${response.errorBody()}")
@@ -336,13 +336,14 @@ class CreatePostContents : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    utils.terminatePostDTO()
                     finish()
                 }
             })
         }
     }
 
-    fun onLikeButtonClick(postId: Int) {
+    fun onLikeButtonClick() {
         val userId = postDTO.userId
         val isLiked = postDTO.likes.contains(userId)
 

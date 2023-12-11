@@ -4,10 +4,12 @@ package com.example.hello
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hello.api.RetrofitClient
 import com.example.hello.api.SignInService
+import com.example.hello.api.Utils
 import com.example.hello.databinding.ActivitySignInBinding
 import com.example.hello.model.AccessTokenDTO
 import com.example.hello.model.SignInRequestDTO
@@ -30,9 +32,6 @@ class SignInActivity : AppCompatActivity() {
         binding.signInBtn.setOnClickListener {
             val loginId = binding.textInputSignInId.text.toString()
             val password = binding.textInputPassword.text.toString()
-
-            Log.v("LOGIN", "loginId : " + loginId)
-            Log.v("LOGIN", "password : " + password)
 
             val userInfo: SignInRequestDTO = SignInRequestDTO(loginId, password)
             requestSignIn(userInfo)
@@ -65,17 +64,15 @@ class SignInActivity : AppCompatActivity() {
             ) {
                 if (response.errorBody() != null) {
                     Log.d("로그인 실패", response.errorBody().toString())
+                    Toast.makeText(this@SignInActivity, "로그인에 실패했습니다.\n비밀번호를 다시 확인해주세요", Toast.LENGTH_LONG).show()
                 } else {
-                    Log.v("LOGIN", "GrantType : ${response.body()!!.grantType}")
-                    Log.v("LOGIN", "AccessToken : ${response.body()!!.accessToken}")
-                    Log.v("LOGIN", "LoginId : ${response.body()!!.loginId}")
+                    val utils: Utils = application as Utils
+                    utils.init()
 
-//                        Utils.setGrantType(response.body()!!.grantType)
-//                        Utils.setAccessToken(response.body()!!.accessToken)
+                    utils.setAuthToken(response.body()!!.accessToken)
+                    utils.setLoginId(response.body()!!.accessToken)
 
                     val intent = Intent(this@SignInActivity, MainPage::class.java)
-                    intent.putExtra("authToken", response.body()!!.accessToken)
-                    intent.putExtra("loginId", response.body()!!.loginId)
                     startActivity(intent)
                     finish()
                 }

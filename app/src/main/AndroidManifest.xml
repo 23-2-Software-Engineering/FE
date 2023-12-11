@@ -19,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hello"
+        android:name=".api.Utils"
         tools:targetApi="m">
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="040fa443f9ac32fb498d3058c1a13ba8"/>
         <activity

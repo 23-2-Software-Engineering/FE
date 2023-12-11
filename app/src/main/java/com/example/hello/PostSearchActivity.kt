@@ -1,5 +1,6 @@
 package com.example.hello
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -34,6 +35,7 @@ class PostSearchActivity : AppCompatActivity() {
 
             // 게시글 추천 리퀘스트
             recommendPost()
+            Thread.sleep(100)
         } catch (e: NullPointerException) {
             Log.e("RECOMMEND POST", "ERR: 포스트 추천에서 NULL POINTER EXCEPTION 발생")
         }
@@ -56,17 +58,31 @@ class PostSearchActivity : AppCompatActivity() {
             gridView.adapter = PostSearchAdapter(this, postList)
         }
 
+        gridView.setOnItemClickListener { parent, view, position, id ->
+            val loginId = intent.getStringExtra("loginId")
+            val authToken = intent.getStringExtra("authToken")
+            val postDTO = parent.getItemAtPosition(position) as PostDTO
+            Log.d("Intent: ", authToken + " " + loginId)
+
+            val newIntent = Intent(this, CreatePostContents::class.java)
+            newIntent.putExtra("authToken", authToken)
+            newIntent.putExtra("loginId", loginId)
+            newIntent.putExtra("postDTO", postDTO)
+            startActivity(newIntent)
+        }
     }
 
     // 포스트 전체 검색
     private fun searchAllPost() {
         var retrofit: Retrofit = RetrofitClient.getInstance()
         var postSearchService = retrofit.create(PostSearchService::class.java)
+        var newPostList = ArrayList<PostDTO>()
 
         val callSync: Call<ArrayList<PostDTO>> = postSearchService.searchPostAll()
         Thread(Runnable() {
             try {
-                postList = callSync.execute().body()!!
+                newPostList = callSync.execute().body()!!
+                postList = newPostList
             } catch (e: IOException) {
                 Log.e("SEACRCH POST ALL", "ERR: " + callSync.execute().errorBody())
                 e.printStackTrace()
@@ -74,7 +90,7 @@ class PostSearchActivity : AppCompatActivity() {
         }).start()
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -86,12 +102,14 @@ class PostSearchActivity : AppCompatActivity() {
     private fun recommendPost() {
         var retrofit: Retrofit = RetrofitClient.getInstance()
         var postSearchService = retrofit.create(PostSearchService::class.java)
+        var newPostList = ArrayList<PostDTO>()
 
         Log.d("REQUEST RECOMMEND POST", "")
         val callSync: Call<ArrayList<PostDTO>> = postSearchService.searchPostOrderByLikes()
         Thread(Runnable() {
             try {
-                postList = callSync.execute().body()!!
+                newPostList = callSync.execute().body()!!
+                postList = newPostList
             } catch (e: IOException) {
                 Log.e("RECOMMEND POST", "ERR: " + callSync.execute().errorBody())
                 e.printStackTrace()
@@ -99,7 +117,7 @@ class PostSearchActivity : AppCompatActivity() {
         }).start();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -112,11 +130,13 @@ class PostSearchActivity : AppCompatActivity() {
         val searchTag: String = postSearchBinding.tietSearch.text.toString()
         var retrofit: Retrofit = RetrofitClient.getInstance()
         var courseSearchService = retrofit.create(PostSearchService::class.java)
+        var newPostList = ArrayList<PostDTO>()
 
         val callSync: Call<ArrayList<PostDTO>> = courseSearchService.searchPostByTag(tag)
         Thread(Runnable() {
             try {
-                postList = callSync.execute().body()!!
+                newPostList = callSync.execute().body()!!
+                postList = newPostList
             } catch (e: IOException) {
                 Log.e("SEACRCH POST TAG", "ERR: " + callSync.execute().errorBody())
                 e.printStackTrace()
@@ -124,7 +144,7 @@ class PostSearchActivity : AppCompatActivity() {
         }).start();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }

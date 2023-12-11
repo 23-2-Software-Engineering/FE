@@ -11,6 +11,7 @@ import com.example.hello.adapter.CourseAdapter
 import com.example.hello.api.CourseCreateService
 import com.example.hello.api.CourseUpdateService
 import com.example.hello.api.RetrofitClient
+import com.example.hello.api.Utils
 import com.example.hello.databinding.CourseBinding
 import com.example.hello.model.CourseData
 import com.example.hello.model.CourseDto
@@ -43,6 +44,7 @@ class Course : AppCompatActivity() {
     val createApi: CourseCreateService = retrofit.create(CourseCreateService::class.java)
     val updateApi: CourseUpdateService = retrofit.create(CourseUpdateService::class.java)
     lateinit var authToken: String
+    lateinit var utils: Utils
 
     @SuppressLint("NotifyDataSetChanged")
     val getAddLocResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -71,10 +73,11 @@ class Course : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        utils = application as Utils
+        authToken = utils.getAuthToken()
 
-        authToken = intent.getStringExtra("authToken").toString()
         try {
-            courseDto = (intent.getSerializableExtra("courseDto") as CourseDto?)!!
+            courseDto = utils.getCourseDTO()!!
             updateCourse()
         } catch (e: NullPointerException){
             newCourse()
@@ -95,9 +98,6 @@ class Course : AppCompatActivity() {
         binding.loc.text = courseDto.courseData.courseTitle
 
         binding.post.setOnClickListener{
-            Log.d("test", authToken)
-            Log.d("test", courseDto.toString())
-
             val now = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.KOREA).format(Calendar.getInstance().time)
             courseDto.modifiedDate = now
 
@@ -110,6 +110,7 @@ class Course : AppCompatActivity() {
                     if(response.errorBody() == null){
                         Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
 
+                        utils.terminateCourseDTO()
                         finish()
                     }
                     else{
@@ -123,7 +124,7 @@ class Course : AppCompatActivity() {
     }
 
     fun newCourse(){
-        val name = intent.getStringExtra("loc").toString()
+        val name = utils.getLoc()
         binding.loc.text = name
         val now = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.KOREA).format(Calendar.getInstance().time)
         courseDto.courseData.courseTitle = name
@@ -140,8 +141,6 @@ class Course : AppCompatActivity() {
         }
 
         binding.post.setOnClickListener{
-            Log.d("test", authToken)
-            Log.d("test", courseDto.toString())
             createApi.postCourse("Bearer $authToken", courseDto).enqueue(object
                 : Callback<CourseDto> {
                 override fun onFailure(call: Call<CourseDto>, t: Throwable) {
@@ -151,10 +150,6 @@ class Course : AppCompatActivity() {
                     if(response.errorBody() == null){
                         Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
                         val intent = Intent(this@Course, CourseView::class.java)
-                        val bundle = Bundle()
-
-                        bundle.putString("authToken", authToken)
-                        intent.putExtras(bundle)
 
                         startActivity(intent)
                         finish()
@@ -172,7 +167,6 @@ class Course : AppCompatActivity() {
     fun addListItem(position: Int) {
         val requestIntent = Intent(this, LocFind::class.java)
 
-        requestIntent.putExtra("place", intent.getStringExtra("loc"))
         requestIntent.putExtra("locId", "")
         requestIntent.putExtra("locName", "")
 
@@ -185,7 +179,6 @@ class Course : AppCompatActivity() {
         targetCourse = courseInfo
         val requestIntent = Intent(this, LocFind::class.java)
 
-        requestIntent.putExtra("place", intent.getStringExtra("loc"))
         requestIntent.putExtra("locId", courseInfo.placeId)
         requestIntent.putExtra("locName", courseInfo.placeName)
 

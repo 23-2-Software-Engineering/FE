@@ -8,10 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hello.adapter.CourseViewAdapter
-import com.example.hello.api.CourseDeleteService
-import com.example.hello.api.CourseListViewService
-import com.example.hello.api.CourseViewService
-import com.example.hello.api.RetrofitClient
+import com.example.hello.api.*
 import com.example.hello.databinding.CourseViewBinding
 import com.example.hello.model.CourseDto
 import retrofit2.Call
@@ -37,6 +34,7 @@ class CourseView:AppCompatActivity() {
             createPost(it)
         }
     )
+    lateinit var utils: Utils
     private val retrofit: Retrofit = RetrofitClient.getInstance()
     private val listViewApi: CourseListViewService = retrofit.create(CourseListViewService::class.java)
     private val deleteApi: CourseDeleteService = retrofit.create(CourseDeleteService::class.java)
@@ -53,9 +51,9 @@ class CourseView:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        authToken = intent.getStringExtra("authToken").toString()
-        loginId = intent.getStringExtra("loginId").toString()
+        utils = application as Utils
 
+        authToken = utils.getAuthToken()
 
         apiExecute()
 
@@ -135,9 +133,7 @@ class CourseView:AppCompatActivity() {
 
                     var startDate = Calendar.getInstance().apply { set(date[0].toInt(), date[1].toInt(), date[2].toInt()) }
 
-
-                    bundle.putString("authToken", authToken)
-                    bundle.putSerializable("courseDto", response.body())
+                    utils.setCourseDTO(response.body()!!)
                     bundle.putString("loc", response.body()!!.courseData.courseTitle)
                     bundle.putSerializable("startDate", startDate)
                     intent.putExtras(bundle)
@@ -154,12 +150,7 @@ class CourseView:AppCompatActivity() {
 
     fun createPost(courseDto: CourseDto){
         val intent = Intent(this@CourseView, SelectTag::class.java)
-        val bundle = Bundle()
-
-        bundle.putString("authToken", authToken)
-        bundle.putString("loginId", loginId)
-        bundle.putSerializable("courseDto", courseDto)
-        intent.putExtras(bundle)
+        utils.setCourseDTO(courseDto)
 
         startActivity(intent)
     }

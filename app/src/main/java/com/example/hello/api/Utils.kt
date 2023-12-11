@@ -1,46 +1,67 @@
 package com.example.hello.api
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
+import android.app.Application
+import com.example.hello.model.CourseDto
+import com.example.hello.model.PostDTO
 
+class Utils: Application() {
+    private lateinit var loginId: String
+    private lateinit var authToken: String
+    private lateinit var loc: String
+    private var postDTO: PostDTO? = null
+    private var courseDTO: CourseDto? = null
 
-class Utils private constructor(context: Context) {
-    private val mContext: Context = context
-
-    companion object {
-        private const val PREFS = "prefs"
-        private const val Access_Token = "Access_Token"
-        private lateinit var Grant_Type: String
-        private lateinit var prefs: SharedPreferences
-        private lateinit var prefsEditor: SharedPreferences.Editor
-        @SuppressLint("StaticFieldLeak")
-        private var instance: Utils? = null
-        @Synchronized
-        fun init(context: Context): Utils? {
-            if (instance == null) instance = Utils(context)
-            return instance
-        }
-
-        fun setGrantType(value: String){
-            Grant_Type = value
-        }
-
-        fun setAccessToken(value: String?) {
-            prefsEditor.putString(Access_Token, value).commit()
-        }
-
-        fun getAccessToken(defValue: String?): String? {
-            return prefs.getString(Access_Token, defValue)
-        }
-
-        fun clearToken() {
-            prefsEditor.clear().apply()
-        }
+    override fun onCreate() {
+        super.onCreate()
+        loginId = ""
+        authToken = ""
+        loc = ""
     }
 
-    init {
-        prefs = mContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        prefsEditor = prefs.edit()
+    fun init(){
+        loginId = ""
+        authToken = ""
+        loc = ""
+    }
+
+    fun setLoginId(id: String){
+        this.loginId = id
+    }
+    fun getLoginId(): String {
+        return loginId
+    }
+
+    fun setAuthToken(token: String){
+        this.authToken = token
+    }
+    fun getAuthToken(): String {
+        return authToken
+    }
+
+    fun setLoc(location: String){
+        this.loc = location
+    }
+    fun getLoc(): String {
+        return loc
+    }
+
+    fun setPostDTO(post: PostDTO){
+        this.postDTO = post
+    }
+    fun getPostDTO(): PostDTO? {
+        return postDTO
+    }
+    fun terminatePostDTO(){
+        this.postDTO = null
+    }
+
+    fun setCourseDTO(course: CourseDto){
+        this.courseDTO = course
+    }
+    fun getCourseDTO(): CourseDto? {
+        return courseDTO
+    }
+    fun terminateCourseDTO(){
+        this.courseDTO = null
     }
 }

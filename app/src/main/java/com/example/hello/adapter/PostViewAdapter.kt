@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.hello.databinding.MyPostItemBinding
 import com.example.hello.model.PostDTO
 
@@ -24,6 +25,9 @@ class PostViewAdapter (
             @SuppressLint("SetTextI18n")
             fun bind(item: PostDTO, position: Int){
                 binding.postTitle.text = item.title
+                Glide.with(binding.root)
+                    .load("http://192.168.0.77:8080${item.postData[0].pictures[0]}")
+                    .into(binding.postImage)
             }
         }
 
