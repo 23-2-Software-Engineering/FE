@@ -24,7 +24,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:layout_marginBottom="18dp">
+<!--            android:layout_marginBottom="24dp"-->
+
 
             <ImageButton
                 android:id="@+id/backBtn"
@@ -53,49 +56,49 @@
                 android:src="@drawable/search_icon" />
         </LinearLayout>
 
-        <!-- 태그들 -->
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginVertical="16dp">
+<!--         태그들 -->
+<!--        <ScrollView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:layout_marginVertical="16dp">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal">-->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/tag_btn_shape"
-                    android:text="#성수동"
-                    android:textColor="@color/cornflowerblue"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:layout_marginRight="8dp"-->
+<!--                    android:background="@drawable/tag_btn_shape"-->
+<!--                    android:text="#성수동"-->
+<!--                    android:textColor="@color/cornflowerblue"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="normal" />-->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/tag_btn_shape"
-                    android:text="#맛집"
-                    android:textColor="@color/cornflowerblue"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:layout_marginRight="8dp"-->
+<!--                    android:background="@drawable/tag_btn_shape"-->
+<!--                    android:text="#맛집"-->
+<!--                    android:textColor="@color/cornflowerblue"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="normal" />-->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@drawable/tag_btn_shape"
-                    android:text="#카페"
-                    android:textColor="@color/cornflowerblue"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
+<!--                <Button-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:layout_marginRight="8dp"-->
+<!--                    android:background="@drawable/tag_btn_shape"-->
+<!--                    android:text="#카페"-->
+<!--                    android:textColor="@color/cornflowerblue"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="normal" />-->
 
-            </LinearLayout>
-        </ScrollView>
+<!--            </LinearLayout>-->
+<!--        </ScrollView>-->
 
 
         <GridView

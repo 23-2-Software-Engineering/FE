@@ -82,13 +82,8 @@ class SignInActivity : AppCompatActivity() {
                     }
 
                     val intent = Intent(this@SignInActivity, MainPage::class.java)
-<<<<<<< HEAD
                     intent.putExtra("authToken", authToken)
                     intent.putExtra("loginId", loginId)
-=======
-                    intent.putExtra("authToken", response.body()!!.accessToken)
-                    intent.putExtra("loginId", response.body()!!.loginId)
->>>>>>> e2b9b4d0e232d8d8677244a35ea5b4689298f9ed
                     startActivity(intent)
                     finish()
                 }

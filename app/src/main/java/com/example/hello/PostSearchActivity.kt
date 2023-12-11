@@ -1,5 +1,6 @@
 package com.example.hello
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -56,25 +57,40 @@ class PostSearchActivity : AppCompatActivity() {
             gridView.adapter = PostSearchAdapter(this, postList)
         }
 
+        gridView.setOnItemClickListener { parent, view, position, id ->
+            val loginId = intent.getStringExtra("loginId")
+            val authToken = intent.getStringExtra("authToken")
+            val postDTO = parent.getItemAtPosition(position) as PostDTO
+            Log.d("Intent: ", loginId + " " + authToken)
+
+            val intent = Intent(this, CreatePostContents::class.java)
+            intent.putExtra("authToken", authToken)
+            intent.putExtra("loginId", loginId)
+            intent.putExtra("postDTO", postDTO)
+            startActivity(intent)
+        }
     }
 
     // 포스트 전체 검색
     private fun searchAllPost() {
         var retrofit: Retrofit = RetrofitClient.getInstance()
         var postSearchService = retrofit.create(PostSearchService::class.java)
+        var newPostList = ArrayList<PostDTO>()
 
         val callSync: Call<ArrayList<PostDTO>> = postSearchService.searchPostAll()
         Thread(Runnable() {
             try {
-                postList = callSync.execute().body()!!
+                newPostList = callSync.execute().body()!!
+                postList = newPostList
             } catch (e: IOException) {
                 Log.e("SEACRCH POST ALL", "ERR: " + callSync.execute().errorBody())
                 e.printStackTrace()
             }
         }).start()
 
+
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -86,23 +102,27 @@ class PostSearchActivity : AppCompatActivity() {
     private fun recommendPost() {
         var retrofit: Retrofit = RetrofitClient.getInstance()
         var postSearchService = retrofit.create(PostSearchService::class.java)
+        var newPostList = ArrayList<PostDTO>()
 
         Log.d("REQUEST RECOMMEND POST", "")
         val callSync: Call<ArrayList<PostDTO>> = postSearchService.searchPostOrderByLikes()
         Thread(Runnable() {
             try {
-                postList = callSync.execute().body()!!
+                newPostList = callSync.execute().body()!!
+                postList = newPostList
             } catch (e: IOException) {
                 Log.e("RECOMMEND POST", "ERR: " + callSync.execute().errorBody())
                 e.printStackTrace()
             }
         }).start();
 
+
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
+
 
         Log.d("RECOMMEND POST", "MSG: " + postList.toString())
     }
@@ -112,21 +132,27 @@ class PostSearchActivity : AppCompatActivity() {
         val searchTag: String = postSearchBinding.tietSearch.text.toString()
         var retrofit: Retrofit = RetrofitClient.getInstance()
         var courseSearchService = retrofit.create(PostSearchService::class.java)
+        var newPostList = ArrayList<PostDTO>()
 
         val callSync: Call<ArrayList<PostDTO>> = courseSearchService.searchPostByTag(tag)
         Thread(Runnable() {
             try {
-                postList = callSync.execute().body()!!
+                newPostList = callSync.execute().body()!!
+                val noData = callSync.execute().body()!!.isEmpty()
+                postList = newPostList
             } catch (e: IOException) {
                 Log.e("SEACRCH POST TAG", "ERR: " + callSync.execute().errorBody())
                 e.printStackTrace()
             }
         }).start();
 
-        try {
-            Thread.sleep(1000);
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
+        var sleepTime: Int = 0
+        while (newPostList.isEmpty()) {
+            try {
+                Thread.sleep(10);
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
         }
 
         Log.d("SEARCH POST TAG", "MSG: " + postList.toString())

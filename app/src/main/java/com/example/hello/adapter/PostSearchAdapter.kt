@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.hello.R
 import com.example.hello.model.PostDTO
 import okio.ArrayIndexOutOfBoundsException
@@ -49,9 +50,10 @@ class PostSearchAdapter(private var context: Context?, private var postList: Arr
 
         val postThumbnailView: ImageView = view.findViewById(R.id.postview_img)
         try {
-//            val UrlStr: String = postList.get(position).postData.first().pictures.first()
-
-//            val UrlStr: String = postList.get(position).postData.first().pictures.first()
+            val UrlStr: String = "http://10.0.2.2:8080" + postList.get(position).postData.first().pictures.first()
+            Glide.with(context!!)
+                .load(UrlStr)
+                .into(postThumbnailView)
             // 지금은 밑에 있는 코드(더미 이미지) 쓰다 바꾸기
             // postThumbnailUtil.setImageResource(R.drawable.dummy_img)
 
