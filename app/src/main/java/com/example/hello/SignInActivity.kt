@@ -4,6 +4,7 @@ package com.example.hello
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hello.api.RetrofitClient
@@ -65,6 +66,7 @@ class SignInActivity : AppCompatActivity() {
             ) {
                 if (response.errorBody() != null) {
                     Log.d("로그인 실패", response.errorBody().toString())
+                    Toast.makeText(this@SignInActivity, "로그인에 실패했습니다.\n비밀번호를 다시 확인해주세요", Toast.LENGTH_LONG).show()
                 } else {
                     Log.v("LOGIN", "GrantType : ${response.body()!!.grantType}")
                     Log.v("LOGIN", "AccessToken : ${response.body()!!.accessToken}")
@@ -73,9 +75,20 @@ class SignInActivity : AppCompatActivity() {
 //                        Utils.setGrantType(response.body()!!.grantType)
 //                        Utils.setAccessToken(response.body()!!.accessToken)
 
+                    val authToken = response.body()!!.accessToken
+                    val loginId = response.body()!!.accessToken
+                    while(authToken == null || loginId == null) {   // 서버 통신 응답 대기
+                        Thread.sleep(10)
+                    }
+
                     val intent = Intent(this@SignInActivity, MainPage::class.java)
+<<<<<<< HEAD
+                    intent.putExtra("authToken", authToken)
+                    intent.putExtra("loginId", loginId)
+=======
                     intent.putExtra("authToken", response.body()!!.accessToken)
                     intent.putExtra("loginId", response.body()!!.loginId)
+>>>>>>> e2b9b4d0e232d8d8677244a35ea5b4689298f9ed
                     startActivity(intent)
                     finish()
                 }

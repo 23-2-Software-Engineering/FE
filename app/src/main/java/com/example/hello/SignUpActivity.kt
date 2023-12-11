@@ -26,25 +26,7 @@ class SignUpActivity : AppCompatActivity() {
 
         // 회원가입 버튼 눌렀을 때
         binding.signUpRequestBtn.setOnClickListener {
-            if (!validateLoginId()) {
-                return@setOnClickListener
-            }
-            if (!validatePwd()) {
-                return@setOnClickListener
-            }
-            if (!validateDuplicatedPwd()) {
-                return@setOnClickListener
-            }
-            if (!validateNickname()) {
-                return@setOnClickListener
-            }
-            if (!validateEmail()) {
-                return@setOnClickListener
-            }
-
-            requestSingUp()
-            Toast.makeText(this, "회원가입 성공!!", Toast.LENGTH_LONG).show()
-            finish()
+            if(requestSingUp()) finish()
         }
 
         // 회원가입 취소 버튼
@@ -170,37 +152,57 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     // 서버에 회원가입 요청 보내기
-    private fun requestSingUp() {
+    private fun requestSingUp(): Boolean {
         var retrofit: Retrofit = RetrofitClient.getInstance()
         var signUpService: SignUpService = retrofit.create(SignUpService::class.java)
 
-        val loginId = binding.tilId.editText?.text.toString()
-        val password = binding.tilPassword.editText?.text.toString()
-        val email = binding.tilEmail.editText?.text.toString()
-        val name = binding.tilName.editText?.text.toString()
-        val nickname = binding.tilNickname.editText?.text.toString()
-        val birth = binding.tilBirthday.editText?.text.toString()
+        if (!validateLoginId()) {
+            return false
+        }
+        else if (!validatePwd()) {
+            return false
+        }
+        else if (!validateDuplicatedPwd()) {
+            return false
+        }
+        else if (!validateNickname()) {
+            return false
+        }
+        else if (!validateEmail()) {
+            return false
+        }
+        else {
+            val loginId = binding.tilId.editText?.text.toString()
+            val password = binding.tilPassword.editText?.text.toString()
+            val email = binding.tilEmail.editText?.text.toString()
+            val name = binding.tilName.editText?.text.toString()
+            val nickname = binding.tilNickname.editText?.text.toString()
+            val birth = binding.tilBirthday.editText?.text.toString()
 
-        val signUpDTO = SignUpDTO(loginId, password, name, nickname, birth, email)
+            val signUpDTO = SignUpDTO(loginId, password, name, nickname, birth, email)
 
-        signUpService.requestSignUp(signUpDTO)
-            .enqueue(object : Callback<SignUpResponseDTO> {
-                override fun onFailure(call: Call<SignUpResponseDTO>, t: Throwable) {
-                    Log.e("FAILURE", t.message.toString())
-                    var dialog = AlertDialog.Builder(this@SignUpActivity)
-                    dialog.setTitle("에러")
-                    dialog.setMessage("서버 호출에 실패했습니다.")
-                    dialog.show()
-                    // signUpBinding.tilId.error = "서버 연결에 실패했습니다"
-                }
+            signUpService.requestSignUp(signUpDTO)
+                .enqueue(object : Callback<SignUpResponseDTO> {
+                    override fun onFailure(call: Call<SignUpResponseDTO>, t: Throwable) {
+                        Log.e("FAILURE", t.message.toString())
+                        var dialog = AlertDialog.Builder(this@SignUpActivity)
+                        dialog.setTitle("에러")
+                        dialog.setMessage("서버 호출에 실패했습니다.")
+                        dialog.show()
+                        // signUpBinding.tilId.error = "서버 연결에 실패했습니다"
+                    }
 
-                override fun onResponse(
-                    call: Call<SignUpResponseDTO>,
-                    response: Response<SignUpResponseDTO>,
-                ) {
-                    var signUpResponse = response.body()
-                    Log.v("SIGNUP", "MSG: " + signUpResponse?.msg)
-                }
-            })
+                    override fun onResponse(
+                        call: Call<SignUpResponseDTO>,
+                        response: Response<SignUpResponseDTO>,
+                    ) {
+                        var signUpResponse = response.body()
+                        Log.v("SIGNUP", "MSG: " + signUpResponse?.msg)
+                        Toast.makeText(this@SignUpActivity, "회원가입 성공!!", Toast.LENGTH_LONG).show()
+                    }
+                })
+
+            return true
+        }
     }
 }
