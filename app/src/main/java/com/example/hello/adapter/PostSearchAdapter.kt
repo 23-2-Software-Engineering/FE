@@ -51,6 +51,7 @@ class PostSearchAdapter(private var context: Context?, private var postList: Arr
         try {
 //            val UrlStr: String = postList.get(position).postData.first().pictures.first()
 
+//            val UrlStr: String = postList.get(position).postData.first().pictures.first()
             // 지금은 밑에 있는 코드(더미 이미지) 쓰다 바꾸기
             // postThumbnailUtil.setImageResource(R.drawable.dummy_img)
 
