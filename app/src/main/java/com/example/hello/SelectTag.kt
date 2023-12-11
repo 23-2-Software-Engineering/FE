@@ -9,11 +9,14 @@ class SelectTag : AppCompatActivity() {
 
     private lateinit var binding: ActivitySelectTagBinding
     private var tags = arrayListOf<String>()
+    var loginId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectTagBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loginId = intent.getStringExtra("loginId").toString()
 
         binding.backPageButton.setOnClickListener{
             finish()
@@ -73,6 +76,7 @@ class SelectTag : AppCompatActivity() {
         bundle.putSerializable("tags", tags)
         bundle.putSerializable("courseDto", courseDto)
         bundle.putString("authToken", authToken)
+        bundle.putString("loginId", loginId)
         intent.putExtras(bundle)
 
         startActivity(intent)

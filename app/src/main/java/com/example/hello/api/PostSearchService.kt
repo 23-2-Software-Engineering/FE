@@ -10,15 +10,20 @@ interface PostSearchService {
     @GET("/post")
     fun searchPostAll(): Call<ArrayList<PostDTO>>
 
+    // 게시글 좋아요 순으로 조회
+    @GET("/post/orderBy-likes")
+    fun searchPostOrderByLikes(): Call<ArrayList<PostDTO>>
+
+
     // 게시글 아이디로 조회
     @GET("/post/{post_id}")
     fun searchPostById(
-        @Path("post_id") post_id: String
+        @Path("post_id") post_id: String,
     ): Call<ArrayList<PostDTO>>
 
     // 태그로 게시글 조회
     @GET("/post/by-tag/{name}")
     fun searchPostByTag(
-        @Path("name") name: String
+        @Path("name") name: String,
     ): Call<ArrayList<PostDTO>>
 }

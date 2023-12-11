@@ -53,8 +53,12 @@ class PostCreateAdapter(
                 binding.content.isFocusable = true
                 binding.content.isClickable = true
                 binding.addPictureButton.visibility = View.VISIBLE
+                binding.content.visibility = View.VISIBLE
+                binding.content2.visibility = View.GONE
+                binding.content.setText(item.content)
             }
 
+            binding.content2.text = item.content
             postData = item
             binding.courseTitle.text = "day ${position + 1} : ${item.places[0].date}"
             var courseList = ""

@@ -41,6 +41,18 @@ class MainPage : AppCompatActivity() {
             val bundle = Bundle()
 
             bundle.putString("authToken", authToken)
+            bundle.putString("loginId", loginId)
+            intent.putExtras(bundle)
+
+            startActivity(intent)
+        }
+
+        binding.postSearch.setOnClickListener {
+            val intent = Intent(this, PostSearchActivity::class.java)
+            val bundle = Bundle()
+
+            bundle.putString("authToken", authToken)
+            bundle.putString("loginId", loginId)
             intent.putExtras(bundle)
 
             startActivity(intent)
@@ -54,7 +66,6 @@ class MainPage : AppCompatActivity() {
 
             bundle.putString("authToken", authToken)
             bundle.putString("loginId", loginId)
-            Log.d("아이디", loginId)
             intent.putExtras(bundle)
 
             startActivity(intent)

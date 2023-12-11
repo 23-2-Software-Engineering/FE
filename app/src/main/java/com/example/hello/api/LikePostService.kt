@@ -6,11 +6,10 @@ import retrofit2.http.*
 
 interface LikePostService {
     //백엔드
-    @POST("likes")
+    @GET("likes/{postId}")
     fun addLike(
         @Header("Authorization") authorization: String,
-        @Query("userId") userId: Int,
-        @Query("postId") postId: Int
+        @Path("postId") postId: Int
     ): Call<Boolean>
 
     @GET("likes/count")

@@ -25,6 +25,7 @@ class CourseView:AppCompatActivity() {
     private val binding by lazy { CourseViewBinding.inflate(layoutInflater) }
     lateinit var myCourses:ArrayList<CourseDto>
     lateinit var authToken: String
+    var loginId: String = ""
     val listAdapter = CourseViewAdapter(
         onClickDelete = {
             deleteCourse(it)
@@ -53,6 +54,8 @@ class CourseView:AppCompatActivity() {
         setContentView(binding.root)
 
         authToken = intent.getStringExtra("authToken").toString()
+        loginId = intent.getStringExtra("loginId").toString()
+
 
         apiExecute()
 
@@ -154,6 +157,7 @@ class CourseView:AppCompatActivity() {
         val bundle = Bundle()
 
         bundle.putString("authToken", authToken)
+        bundle.putString("loginId", loginId)
         bundle.putSerializable("courseDto", courseDto)
         intent.putExtras(bundle)
 

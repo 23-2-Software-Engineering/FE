@@ -46,6 +46,7 @@ class CreatePostContents : AppCompatActivity() {
     private lateinit var postDTO: PostDTO
     private var tags = arrayListOf<String>()
     lateinit var courseData: CourseDto
+    var loginId: String = ""
     var myPost:Boolean = false
     val retrofit: Retrofit = RetrofitClient.getInstance()
     val postApi: PostCreateService = retrofit.create(PostCreateService::class.java)
@@ -175,6 +176,7 @@ class CreatePostContents : AppCompatActivity() {
         binding = ActivityPostContentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         authToken = intent.getStringExtra("authToken")!!
+        loginId = intent.getStringExtra("loginId")!!
 
         try {
             postDTO = intent.getSerializableExtra("postDTO") as PostDTO
@@ -195,6 +197,9 @@ class CreatePostContents : AppCompatActivity() {
         binding.uploadPostButton.setOnClickListener {
             createPost()
         }
+        binding.likesButton.setOnClickListener {
+            postDTO.postId?.let { it1 -> likePost(authToken) }
+        }
 
         binding.postData.apply {
             adapter = listAdapter.build(postDTO, myPost)
@@ -210,6 +215,8 @@ class CreatePostContents : AppCompatActivity() {
         binding.tags.text = "#${tags.joinToString(", #")}"
 
         val id = intent.getStringExtra("loginId")!!
+        Log.d("내 아이디", id)
+        Log.d("포스트  아이디", postDTO.loginId!!)
         myPost = postDTO.loginId == id
 
         if (myPost) {
@@ -259,6 +266,10 @@ class CreatePostContents : AppCompatActivity() {
     }
 
     private fun createPost() {
+        Log.d("태그", listAdapter.itemCount.toString())
+        Log.d("태그", listAdapter.getItemId(0).toString())
+        Log.d("태그", listAdapter.getItemViewType(0).toString())
+
         postApi.postPost("Bearer $authToken", postDTO).enqueue(object
             : Callback<PostDTO> {
             override fun onFailure(call: Call<PostDTO>, t: Throwable) {
@@ -272,6 +283,7 @@ class CreatePostContents : AppCompatActivity() {
                     val bundle = Bundle()
 
                     bundle.putString("authToken", authToken)
+                    bundle.putString("loginId", loginId)
                     intent.putExtras(bundle)
 
                     startActivity(intent)
@@ -291,6 +303,10 @@ class CreatePostContents : AppCompatActivity() {
 
         val id = postDTO.postId!!
 
+        Log.d("태그", listAdapter.itemCount.toString())
+        Log.d("태그", listAdapter.getItemId(0).toString())
+        Log.d("태그", listAdapter.getItemViewType(0).toString())
+
         updateApi.updatePost("Bearer $authToken", id, postDTO).enqueue(object
             : Callback<PostDTO> {
             override fun onFailure(call: Call<PostDTO>, t: Throwable) {
@@ -300,13 +316,6 @@ class CreatePostContents : AppCompatActivity() {
             override fun onResponse(call: Call<PostDTO>, response: Response<PostDTO>) {
                 if (response.errorBody() == null) {
                     Log.d("태그", "response : ${response.body()?.toString()}") // 정상출력
-                    val intent = Intent(this@CreatePostContents, CourseView::class.java)
-                    val bundle = Bundle()
-
-                    bundle.putString("authToken", authToken)
-                    intent.putExtras(bundle)
-
-                    startActivity(intent)
                     finish()
                 } else {
                     Log.d("태그: 에러바디", "response : ${response.errorBody()}")
@@ -350,15 +359,16 @@ class CreatePostContents : AppCompatActivity() {
         val isLiked = postDTO.likes.contains(userId)
 
         if (isLiked) {
-            unlikePost(authToken, userId, postId)
+            unlikePost(authToken)
         } else {
-            likePost(authToken, userId, postId)
+            likePost(authToken)
         }
     }
 
     //백엔드 LikeService.java 에서 addLike : Boolean 처리되어 있음
-    fun likePost(authToken: String, userId: Int, postId: Int) {
-        likePostService.addLike("Bearer $authToken", userId, postId).enqueue(object
+    fun likePost(authToken: String) {
+        val postId = postDTO.postId!!
+        likePostService.addLike("Bearer $authToken", postId).enqueue(object
             : Callback<Boolean> {
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 Log.d("태그", t.message!!)
@@ -377,8 +387,9 @@ class CreatePostContents : AppCompatActivity() {
     }
 
     //좋아요 추가, 제거 모두 백엔드에서는 한곳에서 처리하길래
-    fun unlikePost(authToken: String, userId: Int, postId: Int) {
-        likePostService.addLike("Bearer $authToken", userId, postId).enqueue(object
+    fun unlikePost(authToken: String) {
+        val postId = postDTO.postId!!
+        likePostService.addLike("Bearer $authToken", postId).enqueue(object
             : Callback<Boolean> {
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
                 Log.d("태그", t.message!!)

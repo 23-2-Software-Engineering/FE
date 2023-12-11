@@ -2,12 +2,10 @@ package com.example.hello.adapter
 
 import android.annotation.*
 import android.content.Context
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
@@ -49,21 +47,22 @@ class PostSearchAdapter(private var context: Context?, private var postList: Arr
             postTitle.setText("Post Title${position}")
         }
 
-        val postThumbnailUtil: ImageView = view.findViewById(R.id.postview_img)
+        val postThumbnailView: ImageView = view.findViewById(R.id.postview_img)
         try {
-            //
-            // url 이미지는 아래 코드 쓰면 될듯
-//            val imgUrl: String = postList.get(position).postData.first().pictures.first()
-//            val imgUri = Uri.parse(imgUrl)
-//            postThumbnailUtil.setImageResource(R.drawable.dummy_img)
+//            val UrlStr: String = postList.get(position).postData.first().pictures.first()
 
-            // 지금은 밑에 있는 코드(더미 이미지) 쓰다 나중에 바꾸기
-            postThumbnailUtil.setImageResource(R.drawable.dummy_img)
+            // 지금은 밑에 있는 코드(더미 이미지) 쓰다 바꾸기
+            // postThumbnailUtil.setImageResource(R.drawable.dummy_img)
 
         } catch (e: ArrayIndexOutOfBoundsException) {
             Log.e("POST SEARCH", "MSG: No Image Data, Position: ${position}")
-            postThumbnailUtil.setImageResource(R.drawable.dummy_img)
+            postThumbnailView.setImageResource(R.drawable.dummy_img)
         }
+
+        view.setOnClickListener(View.OnClickListener() {
+            val postId = postList.get(position).postId // 게시글 아이디
+            Log.d("POST SEARCH", "MSG: ${postId}번 게시글 클릭!")
+        })
 
         return view!!
     }
