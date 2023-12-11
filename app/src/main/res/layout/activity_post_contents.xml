@@ -96,11 +96,21 @@
                         android:layout_gravity="center"
                         android:layout_marginEnd="20dp"
                         android:layout_weight="0"
+                        android:background="transparent"
                         android:textOff=""
                         android:textOn=""
                         android:button="@drawable/likes_off_button_image" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/authorNicknameView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tags"
