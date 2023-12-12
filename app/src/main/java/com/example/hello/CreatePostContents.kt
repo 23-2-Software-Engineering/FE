@@ -25,7 +25,6 @@ import com.example.hello.model.CourseDto
 import com.example.hello.model.LikeResponseDTO
 import com.example.hello.model.PostDTO
 import com.example.hello.model.PostDataDTO
-import com.example.hello.model.LikeResponseDTO
 import kotlinx.android.synthetic.main.activity_post_contents.authorNicknameView
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_marginTop="8dp"
-            android:background="@color/dodgerBlue" />
+            android:background="@color/cornflowerblue" />
 
         <TextView
             android:id="@+id/courseTitle"
@@ -40,7 +40,7 @@
             <View
                 android:layout_width="4dp"
                 android:layout_height="match_parent"
-                android:background="@color/dodgerBlue" />
+                android:background="@color/cornflowerblue" />
 
             <TextView
                 android:id="@+id/placeName"

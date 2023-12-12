@@ -37,9 +37,8 @@
             android:layout_gravity="center"
             android:fontFamily="@font/gwangyangtouching"
             android:text="골목길"
-            android:textColor="@color/dodgerBlue"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textColor="@color/cornflowerblue"
+            android:textSize="40sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,7 +90,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/gwangyangtouching"
-                android:backgroundTint="@color/dodgerBlue"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/cornflowerblue"
                 android:text="코스 생성" />
 
             <Button
@@ -104,7 +104,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/gwangyangtouching"
-                android:backgroundTint="@color/dodgerBlue"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/cornflowerblue"
                 android:text="포스트 검색" />
 
             <Button
@@ -117,7 +118,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/gwangyangtouching"
-                android:backgroundTint="@color/dodgerBlue"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/cornflowerblue"
                 android:text="내 코스 조회" />
 
             <Button
@@ -130,7 +132,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/gwangyangtouching"
-                android:backgroundTint="@color/dodgerBlue"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/cornflowerblue"
                 android:text="내 포스트 조회" />
 
         </GridLayout>

@@ -192,8 +192,8 @@
             android:layout_below="@id/gridLayout"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:backgroundTint="@color/dodgerBlue"
-            android:fontFamily="@font/gwangyangtouching"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/cornflowerblue"
             android:text="@string/selectTagButton" />
 
     </LinearLayout>
