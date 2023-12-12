@@ -25,12 +25,8 @@ import com.example.hello.model.CourseDto
 import com.example.hello.model.LikeResponseDTO
 import com.example.hello.model.PostDTO
 import com.example.hello.model.PostDataDTO
-import com.example.hello.model.LikeResponseDTO
-import kotlinx.android.synthetic.main.activity_post_contents.authorNicknameView
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -222,6 +218,7 @@ class CreatePostContents : AppCompatActivity() {
         val id = utils.getLoginId()
         Log.d("내 아이디", id)
         Log.d("포스트  아이디", postDTO.loginId!!)
+        Log.d("내 아이디", utils.getUserId().toString())
         myPost = postDTO.loginId == id
 
         if (myPost) {
@@ -370,7 +367,6 @@ class CreatePostContents : AppCompatActivity() {
                     } else{
                         binding.likesButton.setImageResource(R.drawable.likes_off_button_image)
                     }
-                    utils.setUserId(response.body()!!.userId)
                 } else {
                     Log.d("태그: 에러바디", "response : ${response.errorBody()}")
                     Log.d("태그: 메시지", "response : ${response.message()}")
