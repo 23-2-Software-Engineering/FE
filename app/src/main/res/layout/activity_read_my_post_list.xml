@@ -14,20 +14,20 @@
         android:orientation="vertical">
 
         <!--마이페이지로 돌아가는 버튼-->
-        <Button
+        <ImageButton
             android:id="@+id/backPageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="@string/backPageButton"
-            android:textColor="@color/black" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="0"
+            android:background="@drawable/navigation_action" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="@string/readMyPostList"
-        android:textSize="25sp"
+        android:fontFamily="@font/gwangyangtouching"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
         <ScrollView

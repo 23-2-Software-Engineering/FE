@@ -17,9 +17,10 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
             android:text="day 1"
-            android:textColor="#344288"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:fontFamily="@font/gwangyangtouching"
+            android:textColor="@color/cornflowerblue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,20 +31,22 @@
             android:layout_marginTop="40dp"
             android:layout_weight="1"
             android:text="12/24 목"
+            android:fontFamily="@font/gwangyangtouching"
             app:layout_constraintStart_toEndOf="@+id/dayNum"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="#EBEDF6"
+            android:background="@color/aliceBlue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

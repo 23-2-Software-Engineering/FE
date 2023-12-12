@@ -18,19 +18,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/backPageButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="@string/backPageButton"
-                android:textColor="@color/black" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="0"
+                android:background="@drawable/navigation_action" />
 
             <View
                 android:layout_width="50dp"
                 android:layout_height="0dp"
-                android:layout_weight="2" />
+                android:layout_weight="3" />
 
             <Button
                 android:id="@+id/deletePostButton"
@@ -86,6 +84,7 @@
                         android:layout_margin="20dp"
                         android:layout_weight="1"
                         android:text="@string/travelPlace"
+                        android:fontFamily="@font/gwangyangtouching"
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
@@ -110,6 +109,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/gwangyangtouching"
                     android:textSize="15sp" />
 
                 <TextView
@@ -118,8 +118,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:fontFamily="@font/gwangyangtouching"
                     android:textSize="12sp" />
-
 
                 <!--postData 정보를 가져옴. layout_height은 가져오는 정보만큼 설정됨.-->
                 <androidx.recyclerview.widget.RecyclerView

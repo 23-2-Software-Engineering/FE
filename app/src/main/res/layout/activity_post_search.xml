@@ -40,7 +40,7 @@
                 android:layout_width="284dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/til_background"
+                android:background="@color/aliceBlue"
                 android:hint="Search"
                 android:paddingLeft="32dp"
                 android:textSize="18sp" />
