@@ -22,6 +22,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="350dp"
+        android:background="@color/aliceBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -35,7 +36,7 @@
             android:ems="10"
             android:hint="장소 입력"
             android:inputType="textPersonName"
-            android:textSize="14sp"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_search"
             app:layout_constraintEnd_toStartOf="@+id/btn_search"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +48,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/cornflowerblue"
             android:text="검색"
+            android:fontFamily="@font/gwangyangtouching"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,6 +74,9 @@
             android:layout_marginStart="8dp"
             android:enabled="false"
             android:text="이전"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/cornflowerblue"
+            android:fontFamily="@font/gwangyangtouching"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -82,6 +88,9 @@
             android:layout_marginEnd="8dp"
             android:enabled="false"
             android:text="다음"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/cornflowerblue"
+            android:fontFamily="@font/gwangyangtouching"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

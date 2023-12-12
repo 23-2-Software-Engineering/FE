@@ -28,8 +28,8 @@
         android:gravity="center"
         android:text="골목길"
         android:textColor="@color/cornflowerblue"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/gwangyangtouching"
+        android:textSize="50sp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -37,6 +37,7 @@
         android:gravity="left"
         android:paddingLeft="10dp"
         android:text="아이디"
+        android:fontFamily="@font/gwangyangtouching"
         android:textColor="@color/grayfirst"
         android:textSize="16dp" />
 
@@ -57,6 +58,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:paddingLeft="10dp"
+        android:fontFamily="@font/gwangyangtouching"
         android:text="비밀번호"
         android:textSize="16dp" />
 
@@ -120,6 +122,7 @@
         android:paddingRight="16dp"
         android:paddingBottom="8dp"
         android:text="로그인"
+        android:fontFamily="@font/gwangyangtouching"
         android:textColor="@color/white"
         android:textStyle="bold" />
 </LinearLayout>

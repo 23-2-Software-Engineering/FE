@@ -32,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="day 2"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="@color/cornflowerblue"
+            android:fontFamily="@font/gwangyangtouching"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/courseTitle"
             app:layout_constraintTop_toBottomOf="@+id/courseTitle" />
@@ -44,7 +45,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:text="파주 여행"
-            android:textColor="?android:attr/textColorPrimary"
+            android:fontFamily="@font/gwangyangtouching"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

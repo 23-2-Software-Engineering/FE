@@ -18,14 +18,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/backPageButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="@string/backPageButton"
-                android:textColor="@color/black" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="0"
+                android:background="@drawable/navigation_action" />
 
             <View
                 android:layout_width="50dp"

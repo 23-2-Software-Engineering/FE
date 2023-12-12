@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_margin="10dp"
         android:text="Text Text"
+        android:fontFamily="@font/gwangyangtouching"
         android:textSize="16sp" />
 </LinearLayout>

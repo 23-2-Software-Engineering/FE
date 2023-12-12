@@ -30,7 +30,8 @@
                 android:gravity="center_vertical"
                 android:text="회원가입"
                 android:textColor="@color/black"
-                android:textSize="18dp"
+                android:fontFamily="@font/gwangyangtouching"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <!-- 취소 버튼 -->
@@ -39,10 +40,10 @@
                 android:layout_width="68dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/action_btn_shape2"
-
                 android:text="취소"
+                android:fontFamily="@font/gwangyangtouching"
                 android:textColor="@color/cornflowerblue"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <!--        </LinearLayout>-->
@@ -251,9 +252,11 @@
 
         <TextView
             android:text="Login ID"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gwangyangtouching"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_id"
             android:layout_width="match_parent"
@@ -265,14 +268,17 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/til_background"
                 android:padding="8dp"
+
                 android:hint="로그인에 사용할 ID를 입력해주세요" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:text="Password"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gwangyangtouching"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_password"
             android:layout_width="match_parent"
@@ -290,9 +296,11 @@
 
         <TextView
             android:text="Password Check"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gwangyangtouching"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_password_check"
             android:layout_width="match_parent"
@@ -310,9 +318,11 @@
 
         <TextView
             android:text="닉네임"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gwangyangtouching"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_nickname"
             android:layout_width="match_parent"
@@ -329,9 +339,11 @@
 
         <TextView
             android:text="이름"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gwangyangtouching"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_name"
             android:layout_width="match_parent"
@@ -348,9 +360,11 @@
 
         <TextView
             android:text="생일"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gwangyangtouching"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_birthday"
             android:layout_width="match_parent"
@@ -367,9 +381,11 @@
 
         <TextView
             android:text="이메일"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/gwangyangtouching"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_email"
             android:layout_width="match_parent"
@@ -394,9 +410,9 @@
             android:paddingTop="8dp"
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
+            android:fontFamily="@font/gwangyangtouching"
             android:text="회원가입"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
